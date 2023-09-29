@@ -14,6 +14,9 @@ public class Cards {
         this.number = number;
         this.suit = suit;
         this.color = color;
+
+        //Set the initial state of the cards faced down
+        setState(DOWN);
     }
 
     /*
