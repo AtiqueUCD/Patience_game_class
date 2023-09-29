@@ -1,6 +1,7 @@
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 
 public class Deck{
@@ -83,5 +84,10 @@ public class Deck{
         initDeck.addAll(0, speadSuits);
         initDeck.addAll(0, clubSuits);
         
+    }
+
+    public void shuffleDeck()
+    {
+        Collections.shuffle(initDeck);
     }
 }

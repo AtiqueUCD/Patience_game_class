@@ -6,6 +6,7 @@ public class Controller {
         Deck player = new Deck();
         player.initiateSuit();
         player.initiateDeck();
+        player.shuffleDeck();
         Presenter.displayDeck();//displayCards();
         
 
