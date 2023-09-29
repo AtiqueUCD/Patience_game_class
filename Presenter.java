@@ -1,6 +1,22 @@
 
 public class Presenter {
 
+
+    public static void displayPlayArea()
+    {
+
+        for(int i = 0 ; i < 7 ; i++)
+        {
+            for(Cards j : PlayArea.playDeckStacks.get(i))
+                if(j.getFaceState())
+                    System.out.print(j.getCardName() + " ");
+                else
+                    System.out.print("xx ");
+
+            System.out.println("");
+        }
+    }
+
     public static void displayDeck()
     {
         for(int i = 1; i <= 52; i++)
