@@ -1,4 +1,4 @@
-package Patience_game;
+
 
 public class Cards {
     private String suit;
@@ -6,6 +6,15 @@ public class Cards {
     private String color;
     private boolean faceState;
 
+    final static boolean UP = true;
+    final static boolean DOWN = false;
+
+    public Cards(String number, String suit, String color)
+    {
+        this.number = number;
+        this.suit = suit;
+        this.color = color;
+    }
 
     /*
      * Setters
@@ -35,7 +44,7 @@ public class Cards {
      */
     public String getCardName()
     {
-        return suit + number;
+        return suit + number + color;
     }
 
     public String getColor()
