@@ -64,4 +64,45 @@ public class PlayArea extends Deck{
         for(int i = 0 ;i < 7; i++)
             playDeckStacks.get(i).peek().setState(true);
     }
+
+    public String getCards(int stackNumber)
+    {
+        return playDeckStacks.get(stackNumber).peek().getCardName();
+    }
+
+    public String getCardColor(int stackNumber)
+    {
+        return playDeckStacks.get(stackNumber).peek().getColor();
+    }
+
+    public String getCardNumber(int stackNumber)
+    {
+        return playDeckStacks.get(stackNumber).peek().getNumber();
+    }
+
+    public Cards popStack(int stackNumber)
+    {
+        Cards tempObj = new Cards();
+
+        if(!playDeckStacks.get(stackNumber).isEmpty())
+        {
+            tempObj = playDeckStacks.get(stackNumber).pop();
+        }
+
+        if(!playDeckStacks.get(stackNumber).peek().getFaceState())
+        {
+            setCardFaceUP(stackNumber);
+        }
+        return tempObj;
+    }
+
+    public void puchStack(int stackNumber, Cards newCard)
+    {
+        playDeckStacks.get(stackNumber).push(newCard);
+    }
+
+    public void setCardFaceUP(int stackNumber)
+    {
+        playDeckStacks.get(stackNumber).peek().setState(Cards.UP);
+    }
 }

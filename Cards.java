@@ -19,6 +19,13 @@ public class Cards {
         setState(DOWN);
     }
 
+    public Cards()
+    {
+        /*
+         * Empty
+         */
+    }
+
     /*
      * Setters
      */
