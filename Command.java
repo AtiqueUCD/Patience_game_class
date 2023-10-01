@@ -14,36 +14,76 @@ public class Command{
 
     public static boolean processCommand(PlayArea indeck, int commaString)
     {
-        Cards tempCardsObj = new Cards();
+        
 
-        // int command = Integer.parseInt(commaString);
         int command = commaString;
 
         int pickedStackNumber = command / 10;
         int placeStackNumber = command % 10;
-
-        // String pickedCardString = indeck.getCards(pickedStackNumber);
-        // String placedCardString = indeck.getCards(placeStackNumber);
-
-        String pickedCardColor = indeck.getCardColor(pickedStackNumber);
-        String placeCardColor = indeck.getCardColor(placeStackNumber);
-
-        int pickedCardNumber = Integer.parseInt(indeck.getCardNumber(pickedStackNumber));
-
-        System.out.println("pi : " + pickedCardNumber);
-        int placeCardNumber = Integer.parseInt(indeck.getCardNumber(placeStackNumber));
-        System.out.println("pi : " + placeCardNumber);
+        int noOfCards = command / 100;
 
 
-        if(pickedCardColor == placeCardColor)
-            return false;
+        if(noOfCards == 0)
+        {
+            singleTransaction(indeck, pickedStackNumber, placeStackNumber);
+        }else{
+            multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards);
+        }
+
+
+
+
+        return true;
+    }
+
+    public static boolean singleTransaction(PlayArea indeck, int pickedStackNumber, int placeStackNumber)
+    {
+        Cards tempCardsObj = new Cards();
+        boolean returnStatus = false;
+
+        // String pickedCardColor = indeck.getCardColor(pickedStackNumber);
+        // String placeCardColor = indeck.getCardColor(placeStackNumber);
+
+        // int pickedCardNumber = indeck._getCardsNumber(pickedStackNumber);
+        // int placeCardNumber = indeck._getCardsNumber(placeStackNumber);
+
+        // if(pickedCardColor == placeCardColor)
+        //     return false;
         
-        if(placeCardNumber - pickedCardNumber == 1)
+        // if(placeCardNumber - pickedCardNumber == 1)
+        // {
+        //     tempCardsObj = indeck.popStack(pickedStackNumber);
+        //     indeck.puchStack(placeStackNumber, tempCardsObj);
+        // }
+        boolean state = checkValidTransaction(indeck,pickedStackNumber, placeStackNumber);
+        if(state == true)
         {
             tempCardsObj = indeck.popStack(pickedStackNumber);
             indeck.puchStack(placeStackNumber, tempCardsObj);
+            returnStatus = true;
+            System.out.println("S");
         }
+        return returnStatus;
+    }
 
-        return true;
+    public static void multipleTransaction(PlayArea indeck, int pickedStackNumber, int placeStackNumber, int noOfCards)
+    {
+        
+    }
+
+    public static boolean checkValidTransaction(PlayArea indeck, int pickedStackNumber, int placeStackNumber)
+    {
+        boolean returnStatus = false;
+        String pickedCardColor = indeck.getCardColor(pickedStackNumber);
+        String placeCardColor = indeck.getCardColor(placeStackNumber);
+
+        int pickedCardNumber = indeck._getCardsNumber(pickedStackNumber);
+        int placeCardNumber = indeck._getCardsNumber(placeStackNumber);
+
+        if((pickedCardColor != placeCardColor))
+            if(placeCardNumber - pickedCardNumber == 1)
+                returnStatus = true;
+
+        return returnStatus;
     }
 }

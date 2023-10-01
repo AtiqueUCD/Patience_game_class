@@ -2,7 +2,6 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Stack;
 
 public class Deck{
 
@@ -25,25 +24,25 @@ public class Deck{
         for(String suit_type : __suits)
         {
 
-            for(int i = 0; i < 13; i++)
+            for(int i = 1; i <= 13; i++)
             {
 
-                if(i == 0)
+                if(i == 1)
                 {
                     tempStringNumString = "A";
                 }
 
-                else if(i == 10)
+                else if(i == 11)
                 {
                     tempStringNumString = "J";
                 }
 
-                else if(i == 11)
+                else if(i == 12)
                 {
                     tempStringNumString = "Q";
                 }
 
-                else if(i == 12)
+                else if(i == 13)
                 {
                     tempStringNumString = "K";
                 }
@@ -57,19 +56,19 @@ public class Deck{
                 switch(suit_type)
                 {
                     case "H":
-                        heartSuits.add(i, new Cards(tempStringNumString,"H" , "\u001B[31m"));
+                        heartSuits.add(i-1, new Cards(tempStringNumString,"H" , "\u001B[31m"));
                     break;
 
                     case "D":
-                        diamondsSuits.add(i, new Cards(tempStringNumString,"D" , "\u001B[31m"));//[i] = new Cards(tempStringNumString,"D" , "\u001B[31m");
+                        diamondsSuits.add(i-1, new Cards(tempStringNumString,"D" , "\u001B[31m"));//[i] = new Cards(tempStringNumString,"D" , "\u001B[31m");
                     break;
 
                     case "S":
-                        speadSuits.add(i, new Cards(tempStringNumString,"S" , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "S", "\u001B[33m");
+                        speadSuits.add(i-1, new Cards(tempStringNumString,"S" , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "S", "\u001B[33m");
                     break;
 
                     case "C":
-                        clubSuits.add(i, new Cards(tempStringNumString,"C" , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "C", "\u001B[33m");
+                        clubSuits.add(i-1, new Cards(tempStringNumString,"C" , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "C", "\u001B[33m");
                     break;
                 }
             }

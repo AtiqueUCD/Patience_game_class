@@ -14,6 +14,8 @@ public class Controller {
         player.shuffleDeck();
         player.setupPlayArea();
         // Presenter.displayDeck();
+        
+
         player.initPlayDeck();
         Presenter.displayPlayArea();
 
@@ -24,11 +26,5 @@ public class Controller {
             Presenter.displayPlayArea();
             commandString = Command.getCommand();
         }
-
-        
-
-        //Accessing a very specific suit - should not be done
-        // Deck.heartSuits[0].setState(true);
-        // Presenter.displayUPFacingCards();
     }
 }

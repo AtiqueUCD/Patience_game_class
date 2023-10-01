@@ -54,7 +54,7 @@ public class Cards {
      */
     public String getCardName()
     {
-        return suit + number + color;
+        return (suit + number + color);
     }
 
     public String getColor()

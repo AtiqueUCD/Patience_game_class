@@ -5,20 +5,23 @@ public class Presenter {
     public static void displayPlayArea()
     {
 
+        System.out.flush();
         for(int i = 0 ; i < 7 ; i++)
         {
             for(Cards j : PlayArea.playDeckStacks.get(i))
+            {
                 if(j.getFaceState())
-                    System.out.print(j.getCardName() + " ");
+                    System.out.print(j.getCardName());
                 else
-                    System.out.print("xx ");
-
+                    System.out.print("xx " + "\u001B[0m");
+            }
             System.out.println("");
         }
     }
 
     public static void displayDeck()
     {
+        System.out.flush();
         for(int i = 1; i <= 52; i++)
         {
             System.out.print(Deck.initDeck.get(i-1).getCardName() + " ");

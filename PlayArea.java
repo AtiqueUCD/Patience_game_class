@@ -80,6 +80,36 @@ public class PlayArea extends Deck{
         return playDeckStacks.get(stackNumber).peek().getNumber();
     }
 
+    public int _getCardsNumber(int stackNumber)
+    {
+        String tempSring = getCardNumber(stackNumber);
+        int returnNumber;
+
+        switch(tempSring)
+        {
+            case "A":
+                returnNumber = 1;
+            break;
+
+            case "J":
+                returnNumber = 11;
+            break;
+
+            case "Q":
+                returnNumber = 12;
+            break;
+
+            case "K":
+                returnNumber = 13;
+            break;
+
+            default:
+                returnNumber = Integer.parseInt(tempSring);
+        }
+
+        return returnNumber;
+    }
+
     public Cards popStack(int stackNumber)
     {
         Cards tempObj = new Cards();
@@ -89,7 +119,7 @@ public class PlayArea extends Deck{
             tempObj = playDeckStacks.get(stackNumber).pop();
         }
 
-        if(!playDeckStacks.get(stackNumber).peek().getFaceState())
+        if(!playDeckStacks.get(stackNumber).isEmpty() && !playDeckStacks.get(stackNumber).peek().getFaceState())
         {
             setCardFaceUP(stackNumber);
         }
