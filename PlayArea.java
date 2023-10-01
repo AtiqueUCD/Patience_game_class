@@ -135,4 +135,9 @@ public class PlayArea extends Deck{
     {
         playDeckStacks.get(stackNumber).peek().setState(Cards.UP);
     }
+
+    public boolean getStackIsEmpty(int stackNumber)
+    {
+        return playDeckStacks.get(stackNumber).isEmpty();
+    }
 }

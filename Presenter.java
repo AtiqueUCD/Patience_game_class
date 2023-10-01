@@ -8,10 +8,11 @@ public class Presenter {
         System.out.flush();
         for(int i = 0 ; i < 7 ; i++)
         {
+            System.out.print(i + " -> ");
             for(Cards j : PlayArea.playDeckStacks.get(i))
             {
-                if(j.getFaceState())
-                    System.out.print(j.getCardName());
+                if(true)//j.getFaceState())
+                    System.out.print(j.getCardName() + " ");
                 else
                     System.out.print("xx " + "\u001B[0m");
             }
