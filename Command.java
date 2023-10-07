@@ -112,13 +112,13 @@ public class Command{
         System.out.println(transportList);
 
         //get the first card from the picked up deck
-        first_Cards = transportList.get(transactionNumber - 1).getCardName();
-        first_Cards_color = transportList.get(transactionNumber - 1).getColor();
+        first_Cards = transportList.get(noOfCards - 1).getNumber();
+        first_Cards_color = transportList.get(noOfCards - 1).getColor();
         first_cards_number = indeck._getCardsNumber(first_Cards);
-        first_card_state = transportList.get(first_cards_number).getFaceState();
+        first_card_state = transportList.get(noOfCards - 1).getFaceState();
 
         //Check for a single card
-        placed_Cards = indeck.getCards(placeStackNumber);
+        placed_Cards = indeck.getCardNumber(placeStackNumber);
         place_Cards_color = indeck.getCardColor(placeStackNumber);
         placed_cards_number = indeck._getCardsNumber(placed_Cards);
         first_card_state = indeck.getCardFaceStatus(placeStackNumber);

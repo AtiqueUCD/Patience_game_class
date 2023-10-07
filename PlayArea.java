@@ -114,9 +114,9 @@ public class PlayArea extends Deck{
         return returnNumber;
     }
 
-    public int _getCardsNumber(String Card_name)
+    public int _getCardsNumber(String Card_number)
     {
-        String tempSring = Card_name;//getCardNumber(stackNumber);
+        String tempSring = Card_number;//getCardNumber(stackNumber);
         int returnNumber;
 
         switch(tempSring)
