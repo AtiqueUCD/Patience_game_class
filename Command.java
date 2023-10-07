@@ -85,8 +85,8 @@ public class Command{
 
         int transactionNumber = 0;
 
-        String pickedCardColor = "";
-        int pickedCardNumber = 0;
+        String pickedCardColor = "", placeCardColor = "";
+        int pickedCardNumber = 0, placedCardNumber = 0;
 
         /* Used for checking single card */
         String first_Cards = "", first_Cards_color = "";
@@ -122,6 +122,11 @@ public class Command{
         if(first_card_state != Cards.UP && placed_card_state != Cards.UP)
         {
             System.out.println("FC -> FAIL");
+            
+            for(Cards i : transportList)
+            {
+                indeck.puchStack(pickedStackNumber, i);
+            }
             return false;       
         }
 
@@ -131,24 +136,48 @@ public class Command{
         if(!checkValidTransaction(first_Cards_color,place_Cards_color,first_cards_number,placed_cards_number))
         {
             System.out.println("SC -> FAIL");
+
+            for(Cards i : transportList)
+            {
+                indeck.puchStack(pickedStackNumber, i);
+            }
             return false;
         }
         System.out.println("SC -> OK");
 
 
-        /*
-        while((transactionNumber--) > 0)
+        transactionNumber = noOfCards - 1;
+
+        boolean n_card_status = false, n_1_card_status = false;
+
+        while((transactionNumber) > 0)
         {
             pickedCardColor = transportList.get(transactionNumber).getColor();
             pickedCardNumber = Integer.parseInt(transportList.get(transactionNumber).getNumber());
-            
-            if(!checkValidTransaction(pickedCardColor, placeCardColor, pickedCardNumber, placeCardNumber))
+            n_card_status = transportList.get(transactionNumber).getFaceState();
+
+            placeCardColor = transportList.get(--transactionNumber).getColor();
+            placedCardNumber = Integer.parseInt(transportList.get(transactionNumber).getNumber());
+            n_1_card_status = transportList.get(transactionNumber).getFaceState();
+
+            //Check the face status
+            if(!(n_card_status == true && n_1_card_status == true))
+            {
+                System.out.println("MSFC -> FAIL");
+                return false;        
+            }
+
+            if(!checkValidTransaction(pickedCardColor, placeCardColor, pickedCardNumber, placedCardNumber))
+            {
+                System.out.println("MTC -> FAIL");
                 return false;
+            }
         }
-        */
+        
+        
         while((--noOfCards) >= 0)
         {
-            System.out.println("M");
+            System.out.println("MT -> OK");
             //transfer the picked card into the placed stack
             indeck.puchStack(placeStackNumber, transportList.get(noOfCards));
         }
