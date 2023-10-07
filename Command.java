@@ -3,7 +3,12 @@ import java.util.Scanner;
 
 public class Command{
 
+    public static final int INIT_DRAW_ID = 1;
+
     public static int commandString;
+
+    public static int drawID = INIT_DRAW_ID;
+
     public static int getCommand()
     {
         Scanner in = new Scanner(System.in);
@@ -35,8 +40,16 @@ public class Command{
         int placeStackNumber = cmd[0];//command % 10;
         int noOfCards = cmd[2];//command / 100;
         
-
-        if(noOfCards == 0)
+        if(pickedStackNumber == 0)// && placeStackNumber == 8)
+        {
+            if(placeStackNumber == 8)
+                flipDrawCard(indeck);
+            else
+            {
+                System.out.println("CMD -> INV");
+            }
+        }
+        else if(noOfCards == 0)
         {
             singleTransaction(indeck, pickedStackNumber, placeStackNumber);
         }else{
@@ -49,25 +62,27 @@ public class Command{
         return true;
     }
 
+    public static void flipDrawCard(PlayArea indeck)
+    {
+        int place_ID = 0;
+        place_ID = (drawID == 1) ? 0 : 1;
+
+        if(!indeck.getStackIsEmpty(drawID))
+        {
+            indeck.puchStack(place_ID, indeck.popStack(drawID));
+        }else{
+            drawID = place_ID;
+            place_ID = (drawID == 1) ? 0 : 1;
+            indeck.puchStack(place_ID, indeck.popStack(drawID));
+        }
+
+    }
+
     public static boolean singleTransaction(PlayArea indeck, int pickedStackNumber, int placeStackNumber)
     {
         Cards tempCardsObj = new Cards();
         boolean returnStatus = false;
 
-        // String pickedCardColor = indeck.getCardColor(pickedStackNumber);
-        // String placeCardColor = indeck.getCardColor(placeStackNumber);
-
-        // int pickedCardNumber = indeck._getCardsNumber(pickedStackNumber);
-        // int placeCardNumber = indeck._getCardsNumber(placeStackNumber);
-
-        // if(pickedCardColor == placeCardColor)
-        //     return false;
-        
-        // if(placeCardNumber - pickedCardNumber == 1)
-        // {
-        //     tempCardsObj = indeck.popStack(pickedStackNumber);
-        //     indeck.puchStack(placeStackNumber, tempCardsObj);
-        // }
         boolean state = checkValidTransaction(indeck,pickedStackNumber, placeStackNumber);
         if(state == true)
         {
@@ -122,7 +137,7 @@ public class Command{
         if(first_card_state != Cards.UP && placed_card_state != Cards.UP)
         {
             System.out.println("FC -> FAIL");
-            
+
             for(Cards i : transportList)
             {
                 indeck.puchStack(pickedStackNumber, i);

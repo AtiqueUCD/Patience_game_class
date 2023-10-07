@@ -11,6 +11,8 @@ public class PlayArea extends Deck{
     public static Stack<Cards> stack_play_5 = new Stack<Cards>();
     public static Stack<Cards> stack_play_6 = new Stack<Cards>();
     public static Stack<Cards> stack_play_7 = new Stack<Cards>();
+    public static Stack<Cards> stack_play_draw_A = new Stack<Cards>();
+    public static Stack<Cards> stack_play_draw_B = new Stack<Cards>();
 
     public Cards tempString;
 
@@ -46,8 +48,9 @@ public class PlayArea extends Deck{
             {
                 stack_play_7.push(tempString);
             }
-            // else if(i < 52)
-            //     stack_draw_A.push(tempString);
+            else if(i < 52)
+                stack_play_draw_A.push(tempString);
+                tempString.setState(Cards.UP);
         }
 
         playDeckStacks.add(0, stack_play_1);
@@ -57,12 +60,15 @@ public class PlayArea extends Deck{
         playDeckStacks.add(0, stack_play_5);
         playDeckStacks.add(0, stack_play_6);
         playDeckStacks.add(0, stack_play_7);
+        playDeckStacks.add(0, stack_play_draw_A);
+        playDeckStacks.add(0, stack_play_draw_B);
     }
 
     public void initPlayDeck()
     {
         for(int i = 0 ;i < 7; i++)
-            playDeckStacks.get(i).peek().setState(true);
+            if(!playDeckStacks.get(i).empty())
+                playDeckStacks.get(i).peek().setState(true);
     }
 
     public String getCards(int stackNumber)

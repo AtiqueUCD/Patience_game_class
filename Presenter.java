@@ -6,12 +6,12 @@ public class Presenter {
     {
 
         System.out.flush();
-        for(int i = 0 ; i < 7 ; i++)
+        for(int i = 0 ; i < 9 ; i++)
         {
             System.out.print(i + " -> ");
             for(Cards j : PlayArea.playDeckStacks.get(i))
             {
-                if(true)//j.getFaceState())
+                if(j.getFaceState())
                     System.out.print(j.getCardName() + " ");
                 else
                     System.out.print("xx " + "\u001B[0m");
@@ -31,6 +31,7 @@ public class Presenter {
                 System.out.print("\n");
         }
     }
+
     public static void displayCards()
     {
         System.out.println("Heart");
