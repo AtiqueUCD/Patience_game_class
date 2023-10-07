@@ -4,6 +4,8 @@ import java.util.Scanner;
 public class Command{
 
     public static final int INIT_DRAW_ID = 1;
+    public static final int DRAW_ID_0 = 0;
+    public static final int DRAW_ID_1 = 1;
 
     public static int commandString;
 
@@ -64,15 +66,15 @@ public class Command{
 
     public static void flipDrawCard(PlayArea indeck)
     {
-        int place_ID = 0;
-        place_ID = (drawID == 1) ? 0 : 1;
+        int place_ID = DRAW_ID_0;
+        place_ID = (drawID == DRAW_ID_1) ? DRAW_ID_0 : DRAW_ID_1;
 
         if(!indeck.getStackIsEmpty(drawID))
         {
             indeck.puchStack(place_ID, indeck.popStack(drawID));
         }else{
             drawID = place_ID;
-            place_ID = (drawID == 1) ? 0 : 1;
+            place_ID = (drawID == DRAW_ID_1) ? DRAW_ID_0 : DRAW_ID_1;
             indeck.puchStack(place_ID, indeck.popStack(drawID));
         }
 
