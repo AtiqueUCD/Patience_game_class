@@ -67,6 +67,27 @@ public class Cards {
         return number;
     }
 
+    public int getNumber(int temp)
+    {
+        int cardNumber = 0;
+        switch(number)
+        {
+            case "A":
+                cardNumber = 1;
+            break;
+            case "J":
+                cardNumber = 11;
+            break;
+            case "Q":
+                cardNumber = 12;
+            break;
+            case "K":
+                cardNumber = 13;
+            break;
+        }
+        return cardNumber;
+    }
+
     public boolean getFaceState()
     {
         return faceState;
