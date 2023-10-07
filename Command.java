@@ -93,23 +93,12 @@ public class Command{
         String placed_Cards = "",place_Cards_color = "";
         int first_cards_number, placed_cards_number;
         boolean first_card_state = false, placed_card_state = false;
-        
-
-
-        
-        /*
-        String placeCardColor = indeck.getCardColor(placeStackNumber);
-        int placeCardNumber = indeck._getCardsNumber(placeStackNumber);
-        */
 
         //This loop is to be executed after checking for the first card the the picked array and card from the placed stack.
         while((transactionNumber++) < noOfCards)
         {
             transportList.add(indeck.popStack(pickedStackNumber));
         }
-
-        //debugging - remove latter
-        System.out.println(transportList);
 
         //get the first card from the picked up deck
         first_Cards = transportList.get(noOfCards - 1).getNumber();
@@ -118,10 +107,16 @@ public class Command{
         first_card_state = transportList.get(noOfCards - 1).getFaceState();
 
         //Check for a single card
-        placed_Cards = indeck.getCardNumber(placeStackNumber);
-        place_Cards_color = indeck.getCardColor(placeStackNumber);
-        placed_cards_number = indeck._getCardsNumber(placed_Cards);
-        first_card_state = indeck.getCardFaceStatus(placeStackNumber);
+        if(!indeck.getStackIsEmpty(placeStackNumber))
+        {
+            placed_Cards = indeck.getCardNumber(placeStackNumber);
+            place_Cards_color = indeck.getCardColor(placeStackNumber);
+            placed_cards_number = indeck._getCardsNumber(placed_Cards);
+            first_card_state = indeck.getCardFaceStatus(placeStackNumber);
+        }else{
+            placed_cards_number = first_cards_number + 1;
+            place_Cards_color = (first_Cards_color == "\u001B[31m") ? ("\u001B[33m") : ("\u001B[31m");
+        }
 
         //Check if the first cards from picked and card on which the card has to be placed are all face up
         if(first_card_state != Cards.UP && placed_card_state != Cards.UP)
@@ -139,10 +134,7 @@ public class Command{
             return false;
         }
         System.out.println("SC -> OK");
-        /* 
-        if(!checkValidTransaction(transportList, indeck, pickedStackNumber, placeStackNumber))
-            return false;
-        */
+
 
         /*
         while((transactionNumber--) > 0)

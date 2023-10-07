@@ -11,7 +11,7 @@ public class Presenter {
             System.out.print(i + " -> ");
             for(Cards j : PlayArea.playDeckStacks.get(i))
             {
-                if(true)//j.getFaceState())
+                if(j.getFaceState())
                     System.out.print(j.getCardName() + " ");
                 else
                     System.out.print("xx " + "\u001B[0m");
