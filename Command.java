@@ -10,6 +10,8 @@ public class Command{
     public static int commandString;
 
     public static int drawID = INIT_DRAW_ID;
+    public static int place_ID = DRAW_ID_0;
+    public static boolean draw_picked_state = false;
 
     public static int getCommand()
     {
@@ -54,6 +56,11 @@ public class Command{
         else if(noOfCards == 0)
         {
             singleTransaction(indeck, pickedStackNumber, placeStackNumber);
+            if(draw_picked_state)
+            {
+                draw_picked_state = false;
+                indeck.popStack(place_ID);
+            }
         }else{
             multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards);
         }
@@ -67,7 +74,7 @@ public class Command{
     public static void flipDrawCard(PlayArea indeck)
     {
         Cards tempCard = new Cards();
-        int place_ID = DRAW_ID_0;
+        place_ID = DRAW_ID_0;
         place_ID = (drawID == DRAW_ID_1) ? DRAW_ID_0 : DRAW_ID_1;
 
         if(!indeck.getStackIsEmpty(drawID))
@@ -97,6 +104,8 @@ public class Command{
             tempCardsObj = indeck.popStack(pickedStackNumber);
             indeck.puchStack(placeStackNumber, tempCardsObj);
             returnStatus = true;
+            if(pickedStackNumber == 2)
+                draw_picked_state = true;
             System.out.println("S");
         }
         return returnStatus;
