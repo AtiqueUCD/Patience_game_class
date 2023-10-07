@@ -66,17 +66,23 @@ public class Command{
 
     public static void flipDrawCard(PlayArea indeck)
     {
+        Cards tempCard = new Cards();
         int place_ID = DRAW_ID_0;
         place_ID = (drawID == DRAW_ID_1) ? DRAW_ID_0 : DRAW_ID_1;
 
         if(!indeck.getStackIsEmpty(drawID))
         {
-            indeck.puchStack(place_ID, indeck.popStack(drawID));
+            tempCard = indeck.popStack(drawID);
+            indeck.puchStack(place_ID, tempCard);
         }else{
             drawID = place_ID;
             place_ID = (drawID == DRAW_ID_1) ? DRAW_ID_0 : DRAW_ID_1;
-            indeck.puchStack(place_ID, indeck.popStack(drawID));
+            tempCard = indeck.popStack(drawID);
+            indeck.puchStack(place_ID, tempCard);
         }
+        if(!indeck.getStackIsEmpty(2))
+            indeck.popStack(2);
+        indeck.puchStack(2, tempCard);
 
     }
 

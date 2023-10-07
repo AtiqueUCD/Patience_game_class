@@ -11,6 +11,7 @@ public class PlayArea extends Deck{
     public static Stack<Cards> stack_play_5 = new Stack<Cards>();
     public static Stack<Cards> stack_play_6 = new Stack<Cards>();
     public static Stack<Cards> stack_play_7 = new Stack<Cards>();
+    public static Stack<Cards> stack_play_draw = new Stack<Cards>();
     public static Stack<Cards> stack_play_draw_A = new Stack<Cards>();
     public static Stack<Cards> stack_play_draw_B = new Stack<Cards>();
 
@@ -60,6 +61,7 @@ public class PlayArea extends Deck{
         playDeckStacks.add(0, stack_play_5);
         playDeckStacks.add(0, stack_play_6);
         playDeckStacks.add(0, stack_play_7);
+        playDeckStacks.add(0, stack_play_draw);
         playDeckStacks.add(0, stack_play_draw_A);
         playDeckStacks.add(0, stack_play_draw_B);
     }
