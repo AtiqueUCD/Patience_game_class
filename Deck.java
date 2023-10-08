@@ -5,6 +5,11 @@ import java.util.Collections;
 
 public class Deck{
 
+    final static String HEART = "\u2764";
+    final static String DIAMOND = "\u2666";
+    final static String SPADES = "\u2660";
+    final static String CLUBS = "\u2663";
+
     public String[] __suits = new String[]{"H","S","D","C"};
 
     public static ArrayList<Cards> heartSuits = new ArrayList<Cards>();
@@ -56,19 +61,19 @@ public class Deck{
                 switch(suit_type)
                 {
                     case "H":
-                        heartSuits.add(i-1, new Cards(tempStringNumString,"H" , "\u001B[31m"));
+                        heartSuits.add(i-1, new Cards(tempStringNumString,HEART , "\u001B[31m"));
                     break;
 
                     case "D":
-                        diamondsSuits.add(i-1, new Cards(tempStringNumString,"D" , "\u001B[31m"));//[i] = new Cards(tempStringNumString,"D" , "\u001B[31m");
+                        diamondsSuits.add(i-1, new Cards(tempStringNumString,DIAMOND , "\u001B[31m"));//[i] = new Cards(tempStringNumString,"D" , "\u001B[31m");
                     break;
 
                     case "S":
-                        speadSuits.add(i-1, new Cards(tempStringNumString,"S" , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "S", "\u001B[33m");
+                        speadSuits.add(i-1, new Cards(tempStringNumString,SPADES , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "S", "\u001B[33m");
                     break;
 
                     case "C":
-                        clubSuits.add(i-1, new Cards(tempStringNumString,"C" , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "C", "\u001B[33m");
+                        clubSuits.add(i-1, new Cards(tempStringNumString,CLUBS , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "C", "\u001B[33m");
                     break;
                 }
             }
