@@ -10,7 +10,7 @@ public class Deck{
     final static String SPADES = "\u2660";
     final static String CLUBS = "\u2663";
 
-    public String[] __suits = new String[]{"H","S","D","C"};
+    public String[] __suits = new String[]{HEART,SPADES,DIAMOND,CLUBS};
 
     public static ArrayList<Cards> heartSuits = new ArrayList<Cards>();
     public static ArrayList<Cards> diamondsSuits = new ArrayList<Cards>();
@@ -60,19 +60,19 @@ public class Deck{
 
                 switch(suit_type)
                 {
-                    case "H":
+                    case HEART:
                         heartSuits.add(i-1, new Cards(tempStringNumString,HEART , "\u001B[31m"));
                     break;
 
-                    case "D":
+                    case DIAMOND:
                         diamondsSuits.add(i-1, new Cards(tempStringNumString,DIAMOND , "\u001B[31m"));//[i] = new Cards(tempStringNumString,"D" , "\u001B[31m");
                     break;
 
-                    case "S":
+                    case SPADES:
                         speadSuits.add(i-1, new Cards(tempStringNumString,SPADES , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "S", "\u001B[33m");
                     break;
 
-                    case "C":
+                    case CLUBS:
                         clubSuits.add(i-1, new Cards(tempStringNumString,CLUBS , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "C", "\u001B[33m");
                     break;
                 }
