@@ -6,6 +6,7 @@ public class Command{
     public static final int INIT_DRAW_ID = 1;
     public static final int DRAW_ID_0 = 0;
     public static final int DRAW_ID_1 = 1;
+    public static final int CMD_OFFSET = 1;
 
     public static int commandString;
 
@@ -40,13 +41,13 @@ public class Command{
             command = command / 10; 
         }
 
-        int pickedStackNumber = cmd[1];//command / 10;
-        int placeStackNumber = cmd[0];//command % 10;
+        int pickedStackNumber = cmd[1] + CMD_OFFSET;//command / 10;
+        int placeStackNumber = cmd[0] + CMD_OFFSET;//command % 10;
         int noOfCards = cmd[2];//command / 100;
         
-        if(pickedStackNumber == 0)// && placeStackNumber == 8)
+        if(pickedStackNumber == CMD_OFFSET)// && placeStackNumber == 8)
         {
-            if(placeStackNumber == 8)
+            if(placeStackNumber == 9)//8)
                 flipDrawCard(indeck);
             else
             {
