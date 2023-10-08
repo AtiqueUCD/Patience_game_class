@@ -50,8 +50,10 @@ public class PlayArea extends Deck{
                 stack_play_7.push(tempString);
             }
             else if(i < 52)
+            {
                 stack_play_draw_A.push(tempString);
                 tempString.setState(Cards.UP);
+            }
         }
 
         playDeckStacks.add(0, stack_play_1);
@@ -68,7 +70,7 @@ public class PlayArea extends Deck{
 
     public void initPlayDeck()
     {
-        for(int i = 0 ;i < 7; i++)
+        for(int i = 3 ;i < 10; i++)
             if(!playDeckStacks.get(i).empty())
                 playDeckStacks.get(i).peek().setState(true);
     }

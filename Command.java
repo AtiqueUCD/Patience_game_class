@@ -185,11 +185,11 @@ public class Command{
         while((transactionNumber) > 0)
         {
             pickedCardColor = transportList.get(transactionNumber).getColor();
-            pickedCardNumber = Integer.parseInt(transportList.get(transactionNumber).getNumber());
+            pickedCardNumber = transportList.get(transactionNumber).getNumber(0);
             n_card_status = transportList.get(transactionNumber).getFaceState();
 
             placeCardColor = transportList.get(--transactionNumber).getColor();
-            placedCardNumber = Integer.parseInt(transportList.get(transactionNumber).getNumber());
+            placedCardNumber = transportList.get(transactionNumber).getNumber(0);
             n_1_card_status = transportList.get(transactionNumber).getFaceState();
 
             //Check the face status
@@ -198,10 +198,14 @@ public class Command{
                 System.out.println("MSFC -> FAIL");
                 return false;        
             }
-
-            if(!checkValidTransaction(pickedCardColor, placeCardColor, pickedCardNumber, placedCardNumber))
+            //card number is zero
+            if(!checkValidTransaction(pickedCardColor, placeCardColor, placedCardNumber, pickedCardNumber))
             {
                 System.out.println("MTC -> FAIL");
+                for(Cards i : transportList)
+                {
+                    indeck.puchStack(pickedStackNumber, i);
+                }
                 return false;
             }
         }

@@ -8,6 +8,7 @@ public class Cards {
 
     final static boolean UP = true;
     final static boolean DOWN = false;
+    final static String RESET_COLOUR = "\u001B[0m";
 
     public Cards(String number, String suit, String color)
     {
@@ -54,7 +55,7 @@ public class Cards {
      */
     public String getCardName()
     {
-        return (suit + number + color);
+        return (color + suit + number) + RESET_COLOUR;
     }
 
     public String getColor()
@@ -70,7 +71,7 @@ public class Cards {
     public int getNumber(int temp)
     {
         int cardNumber = 0;
-        switch(number)
+        switch(getNumber())
         {
             case "A":
                 cardNumber = 1;
@@ -83,6 +84,9 @@ public class Cards {
             break;
             case "K":
                 cardNumber = 13;
+            break;
+            default:
+                cardNumber = Integer.parseInt(getNumber());
             break;
         }
         return cardNumber;
