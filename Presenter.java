@@ -6,7 +6,7 @@ public class Presenter {
     {
 
         System.out.flush();
-        for(int i = 0 ; i < 10 ; i++)
+        for(int i = 2 ; i < 10 ; i++)
         {
             System.out.print(i + " -> ");
             for(Cards j : PlayArea.playDeckStacks.get(i))
