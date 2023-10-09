@@ -10,7 +10,7 @@ public class Deck{
     final static String SPADES = "\u2660";
     final static String CLUBS = "\u2663";
 
-    public String[] __suits = new String[]{HEART,SPADES,DIAMOND,CLUBS};
+    public static String[] __suits = new String[]{HEART,SPADES,DIAMOND,CLUBS};
 
     public static ArrayList<Cards> heartSuits = new ArrayList<Cards>();
     public static ArrayList<Cards> diamondsSuits = new ArrayList<Cards>();
