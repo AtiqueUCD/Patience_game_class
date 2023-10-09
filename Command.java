@@ -64,12 +64,32 @@ public class Command{
         boolean return_status = false;
         int len_1 = 0;
         int len_2 = 0;
-        System.out.println(len_1 = placed.length());
-        System.out.println(len_2 = picked.length());
-        if((len_1 < 3) && (len_2 == 0))
+        
+        int[] cmd = new int[]{0,0,0}; /* 0-> placed, 1-> picked 2-> no of cards*/
+        int command = Integer.parseInt(picked);
+
+        System.out.println(len_1 = picked.length());
+        System.out.println(len_2 = placed.length());
+        if((len_1 == 2) && (len_2 == 0))
         {
             //single transaction
             System.out.println("Single tranaction");
+            int i = 0;
+            while (command != 0) {
+                cmd[i++] = command % 10; // Get the last digit
+                command = command / 10; 
+            }
+
+            int pickedStackNumber = cmd[1] + CMD_OFFSET;
+            int placeStackNumber = cmd[0] + CMD_OFFSET;
+
+            singleTransaction(indeck, pickedStackNumber, placeStackNumber);
+            if(draw_picked_state)
+            {
+                draw_picked_state = false;
+                indeck.popStack(place_ID);
+            }
+
         }
         else if(len_1 == 3)
         {
