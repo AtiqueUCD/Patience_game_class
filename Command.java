@@ -16,6 +16,8 @@ public class Command{
     public static int place_ID = DRAW_ID_0;
     public static boolean draw_picked_state = false;
 
+    public static final String DRAW_CARD = "D";
+
     public static String getCommand()
     {
         Scanner in = new Scanner(System.in);
@@ -65,23 +67,32 @@ public class Command{
         int len_1 = 0;
         int len_2 = 0;
         
-        int[] cmd = new int[]{0,0,0}; /* 0-> placed, 1-> picked 2-> no of cards*/
-        int command = Integer.parseInt(picked);
-
         System.out.println(len_1 = picked.length());
         System.out.println(len_2 = placed.length());
-        if((len_1 == 2) && (len_2 == 0))
+
+        int[] cmd = new int[]{0,0,0}; /* 0-> placed, 1-> picked 2-> no of cards*/
+
+        int command = 0, pickedStackNumber = 0, placeStackNumber = 0, noOfCards = 0;
+        if(len_1 > 0)
         {
-            //single transaction
-            System.out.println("Single tranaction");
+            command = Integer.parseInt(picked);
+
             int i = 0;
             while (command != 0) {
                 cmd[i++] = command % 10; // Get the last digit
                 command = command / 10; 
             }
 
-            int pickedStackNumber = cmd[1] + CMD_OFFSET;
-            int placeStackNumber = cmd[0] + CMD_OFFSET;
+            pickedStackNumber = cmd[1] + CMD_OFFSET;
+            placeStackNumber = cmd[0] + CMD_OFFSET;
+            noOfCards = cmd[2];
+        }
+
+
+        if((len_1 == 2) && (len_2 == 0))
+        {
+            //single transaction
+            System.out.println("Single tranaction");
 
             singleTransaction(indeck, pickedStackNumber, placeStackNumber);
             if(draw_picked_state)
@@ -95,6 +106,7 @@ public class Command{
         {
             //Multiple transactions
             System.out.println("Multiple tranaction");
+            multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards);
         }else if((len_1 == 2) && (len_2 != 0))
         {
             //multiple transaction with Apha stack
@@ -103,6 +115,10 @@ public class Command{
         {
             //single transaction with Apha stack
             System.out.println("single transaction with Apha stack");
+        }else if(len_1 == 0 && placed.equals(DRAW_CARD))
+        {
+            System.out.println("Draw");
+            flipDrawCard(indeck);
         }
 
         return return_status;
