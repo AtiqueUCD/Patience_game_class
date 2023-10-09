@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Command{
 
@@ -8,21 +10,83 @@ public class Command{
     public static final int DRAW_ID_1 = 1;
     public static final int CMD_OFFSET = 1;
 
-    public static int commandString;
+    public static String commandString;
 
     public static int drawID = INIT_DRAW_ID;
     public static int place_ID = DRAW_ID_0;
     public static boolean draw_picked_state = false;
 
-    public static int getCommand()
+    public static String getCommand()
     {
         Scanner in = new Scanner(System.in);
-        commandString = in.nextInt();
+        commandString = in.nextLine();
         
         return commandString;
         
     }
 
+    public static String separateAlphabets(String input) {
+        Pattern pattern = Pattern.compile("[a-zA-Z]");
+        Matcher matcher = pattern.matcher(input);
+
+        StringBuilder alphabets = new StringBuilder();
+        while (matcher.find()) {
+            alphabets.append(matcher.group());
+        }
+
+        return alphabets.toString();
+    }
+    public static String separateNumbers(String input) {
+        Pattern pattern = Pattern.compile("\\d");
+        Matcher matcher = pattern.matcher(input);
+
+        StringBuilder numbers = new StringBuilder();
+        while (matcher.find()) {
+            numbers.append(matcher.group());
+        }
+
+        return numbers.toString();
+    }
+
+    /*
+     * Alphabets will always be on the placed end
+     * numbered will always be on picked, placed and no of cards
+     * 
+     * picked:-
+     *          max length - 3 - { picked + placed + no of cards}
+     *          min length - 2 - {picked + placed}; (no of cards, picked) + Alphabet no. stacked
+     * placed:-
+     *          min length - 1
+     *          max length - 1
+     */
+    public static boolean processCommand(PlayArea indeck, String picked, String placed)
+    {
+        boolean return_status = false;
+        int len_1 = 0;
+        int len_2 = 0;
+        System.out.println(len_1 = placed.length());
+        System.out.println(len_2 = picked.length());
+        if((len_1 < 3) && (len_2 == 0))
+        {
+            //single transaction
+            System.out.println("Single tranaction");
+        }
+        else if(len_1 == 3)
+        {
+            //Multiple transactions
+            System.out.println("Multiple tranaction");
+        }else if((len_1 == 2) && (len_2 != 0))
+        {
+            //multiple transaction with Apha stack
+            System.out.println("multiple transaction with Apha stack");
+        }else if((len_1 == 1) && (len_2 != 0))
+        {
+            //single transaction with Apha stack
+            System.out.println("single transaction with Apha stack");
+        }
+
+        return return_status;
+    }
     public static boolean processCommand(PlayArea indeck, int commaString)
     {
         
@@ -31,23 +95,19 @@ public class Command{
         int[] cmd = new int[]{0,0,0}; /* 0-> placed, 1-> picked 2-> no of cards*/
         int i = 0;
 
-        // int pickedStackNumber = command / 10;
-        // int placeStackNumber = command % 10;
-        // int noOfCards = command / 100;
-
 
         while (command != 0) {
             cmd[i++] = command % 10; // Get the last digit
             command = command / 10; 
         }
 
-        int pickedStackNumber = cmd[1] + CMD_OFFSET;//command / 10;
-        int placeStackNumber = cmd[0] + CMD_OFFSET;//command % 10;
-        int noOfCards = cmd[2];//command / 100;
+        int pickedStackNumber = cmd[1] + CMD_OFFSET;
+        int placeStackNumber = cmd[0] + CMD_OFFSET;
+        int noOfCards = cmd[2];
         
-        if(pickedStackNumber == CMD_OFFSET)// && placeStackNumber == 8)
+        if(pickedStackNumber == CMD_OFFSET)
         {
-            if(placeStackNumber == 9)//8)
+            if(placeStackNumber == 9)
                 flipDrawCard(indeck);
             else
             {
