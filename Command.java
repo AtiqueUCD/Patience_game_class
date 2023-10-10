@@ -51,6 +51,37 @@ public class Command{
         return numbers.toString();
     }
 
+    public static int getFinalSuitStackNumber(String str)
+    {
+        int stackNumber = 0;
+        switch(str)
+        {
+            case "H":
+            case "h":
+                //stack number 9
+                stackNumber = 10;
+            break;
+
+            case "S":
+            case "s":
+                //stack number 10
+                stackNumber = 11;
+            break;
+
+            case "D":
+            case "d":
+                //stack number 11
+                stackNumber = 12;
+            break;
+
+            case "C":
+            case "c":
+                //stack number 12
+                stackNumber = 13;
+            break;
+        }
+        return stackNumber;
+    }
     /*
      * Alphabets will always be on the placed end
      * numbered will always be on picked, placed and no of cards
@@ -74,7 +105,7 @@ public class Command{
         int[] cmd = new int[]{0,0,0}; /* 0-> placed, 1-> picked 2-> no of cards*/
 
         int command = 0, pickedStackNumber = 0, placeStackNumber = 0, noOfCards = 0;
-        if(len_1 > 0)
+        if(len_1 > 1)
         {
             command = Integer.parseInt(picked);
 
@@ -87,6 +118,11 @@ public class Command{
             pickedStackNumber = cmd[1] + CMD_OFFSET;
             placeStackNumber = cmd[0] + CMD_OFFSET;
             noOfCards = cmd[2];
+        }else if(len_1 == 1)
+        {
+            command = Integer.parseInt(picked);
+            cmd[0] = command % 10;
+            pickedStackNumber = cmd[0] + CMD_OFFSET;
         }
 
 
@@ -112,10 +148,19 @@ public class Command{
         {
             //multiple transaction with Apha stack
             System.out.println("multiple transaction with Apha stack");
+
+
         }else if((len_1 == 1) && (len_2 != 0))
         {
             //single transaction with Apha stack
             System.out.println("single transaction with Apha stack");
+
+            singleTransaction(indeck, pickedStackNumber, getFinalSuitStackNumber(placed));
+            if(draw_picked_state)
+            {
+                draw_picked_state = false;
+                indeck.popStack(place_ID);
+            }
         }else if(len_1 == 0 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
         {
             System.out.println("Draw");
