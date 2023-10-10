@@ -16,7 +16,8 @@ public class Command{
     public static int place_ID = DRAW_ID_0;
     public static boolean draw_picked_state = false;
 
-    public static final String DRAW_CARD = "D";
+    public static final String DRAW_CARD_U = "D";
+    public static final String DRAW_CARD_L = "d";
 
     public static String getCommand()
     {
@@ -61,14 +62,14 @@ public class Command{
      *          min length - 1
      *          max length - 1
      */
-    public static boolean processCommand(PlayArea indeck, String picked, String placed)
+    public static void processCommand(PlayArea indeck, String picked, String placed)
     {
-        boolean return_status = false;
+
         int len_1 = 0;
         int len_2 = 0;
         
-        System.out.println(len_1 = picked.length());
-        System.out.println(len_2 = placed.length());
+        len_1 = picked.length();
+        len_2 = placed.length();
 
         int[] cmd = new int[]{0,0,0}; /* 0-> placed, 1-> picked 2-> no of cards*/
 
@@ -115,13 +116,15 @@ public class Command{
         {
             //single transaction with Apha stack
             System.out.println("single transaction with Apha stack");
-        }else if(len_1 == 0 && placed.equals(DRAW_CARD))
+        }else if(len_1 == 0 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
         {
             System.out.println("Draw");
             flipDrawCard(indeck);
+        }else
+        {
+            System.out.println("Invalid Command!!!");
         }
 
-        return return_status;
     }
     public static boolean processCommand(PlayArea indeck, int commaString)
     {
