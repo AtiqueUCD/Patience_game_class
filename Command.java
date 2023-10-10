@@ -14,10 +14,20 @@ public class Command{
 
     public static int drawID = INIT_DRAW_ID;
     public static int place_ID = DRAW_ID_0;
-    public static boolean draw_picked_state = false;
+    private static boolean draw_picked_state = false;
 
     public static final String DRAW_CARD_U = "D";
     public static final String DRAW_CARD_L = "d";
+
+    private static void setDrawPickedState(boolean state)
+    {
+        draw_picked_state = state;
+    }
+
+    private static boolean getDrawPickedState()
+    {
+        return draw_picked_state;
+    }
 
     public static String getCommand()
     {
@@ -132,9 +142,11 @@ public class Command{
             System.out.println("Single tranaction");
 
             singleTransaction(indeck, pickedStackNumber, placeStackNumber);
-            if(draw_picked_state)
+            // if(draw_picked_state)
+            if(getDrawPickedState())
             {
-                draw_picked_state = false;
+                // draw_picked_state = false;
+                setDrawPickedState(false);
                 indeck.popStack(place_ID);
             }
 
@@ -155,10 +167,13 @@ public class Command{
             //single transaction with Apha stack
             System.out.println("single transaction with Apha stack");
 
-            singleTransaction(indeck, pickedStackNumber, getFinalSuitStackNumber(placed));
-            if(draw_picked_state)
+            // checkValidTransactionFinalDeck(indeck, pickedStackNumber, getFinalSuitStackNumber(placed), placed.toUpperCase());
+            singleTransaction(indeck, pickedStackNumber, getFinalSuitStackNumber(placed),placed);
+            // if(draw_picked_state)
+            if(getDrawPickedState())
             {
-                draw_picked_state = false;
+                // draw_picked_state = false;
+                setDrawPickedState(false);
                 indeck.popStack(place_ID);
             }
         }else if(len_1 == 0 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
@@ -250,7 +265,27 @@ public class Command{
             indeck.puchStack(placeStackNumber, tempCardsObj);
             returnStatus = true;
             if(pickedStackNumber == 2)
-                draw_picked_state = true;
+                // draw_picked_state = true;
+                setDrawPickedState(true);
+            System.out.println("S");
+        }
+        return returnStatus;
+    }
+
+    public static boolean singleTransaction(PlayArea indeck, int pickedStackNumber, int placeStackNumber, String placed)
+    {
+        Cards tempCardsObj = new Cards();
+        boolean returnStatus = false;
+
+        boolean state = checkValidTransactionFinalDeck(indeck, pickedStackNumber, getFinalSuitStackNumber(placed), placed.toUpperCase());;
+        if(state == true)
+        {
+            tempCardsObj = indeck.popStack(pickedStackNumber);
+            indeck.puchStack(placeStackNumber, tempCardsObj);
+            returnStatus = true;
+            if(pickedStackNumber == 2)
+                // draw_picked_state = true;
+                setDrawPickedState(true);
             System.out.println("S");
         }
         return returnStatus;
@@ -391,6 +426,40 @@ public class Command{
         if((pickedCardColor != placeCardColor))
             if(placeCardNumber - pickedCardNumber == 1)
                 returnStatus = true;
+
+        return returnStatus;
+    }
+
+    public static boolean checkValidTransactionFinalDeck(PlayArea indeck, int pickedStackNumber, int placeStackNumber, String finalSuit)
+    {
+        boolean returnStatus = false;
+        String placeCardColor = " ";
+        int placeCardNumber = 0;
+        
+        String pickedCardColor = indeck.getCardColor(pickedStackNumber);
+        int pickedCardNumber = indeck._getCardsNumber(pickedStackNumber);
+
+        String pickedCardSuit = "";
+        String placedCardSuit = "";
+
+        pickedCardSuit = indeck.getCardSuit(pickedStackNumber);
+        if(!indeck.getStackIsEmpty(placeStackNumber))
+        {
+            placeCardColor = indeck.getCardColor(placeStackNumber);
+            placeCardNumber = indeck._getCardsNumber(placeStackNumber);
+            
+            placedCardSuit = indeck.getCardSuit(placeStackNumber);
+        }else{
+            placeCardNumber = 0;//pickedCardNumber - 1;
+            placeCardColor = (pickedCardColor == "\u001B[31m") ? ("\u001B[31m") : ("\u001B[33m");//Cards should be the same color
+            placedCardSuit = pickedCardSuit;
+
+        }
+        
+        if(finalSuit.equals(pickedCardSuit) && pickedCardSuit.equals(placedCardSuit))
+            if((pickedCardColor == placeCardColor))
+                if(pickedCardNumber - placeCardNumber == 1)
+                    returnStatus = true;
 
         return returnStatus;
     }

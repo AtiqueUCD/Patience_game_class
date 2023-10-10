@@ -97,6 +97,32 @@ public class PlayArea extends Deck{
         return playDeckStacks.get(stackNumber).peek().getColor();
     }
 
+    public String getCardSuit(int stackNumber)
+    {
+        String suit = playDeckStacks.get(stackNumber).peek().getSuit();
+        String returnSuit = "";
+        switch(suit)
+        {
+            case HEART:
+                returnSuit = "H";
+            break;
+
+            case SPADES:
+                returnSuit = "S";
+            break;
+
+            case CLUBS:
+                returnSuit = "C";
+            break;
+
+            case DIAMOND:
+                returnSuit = "D";
+            break;
+                
+        }
+        return returnSuit;
+    }
+
     public String getCardNumber(int stackNumber)
     {
         return playDeckStacks.get(stackNumber).peek().getNumber();
