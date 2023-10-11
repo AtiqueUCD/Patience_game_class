@@ -146,7 +146,7 @@ public class Command{
         if((len_1 == 2) && (len_2 == 0))
         {
             //single transaction
-            System.out.println("Single tranaction");
+            // System.out.println("Single tranaction");
 
             singleTransaction(indeck, pickedStackNumber, placeStackNumber);
             // if(draw_picked_state)
@@ -161,18 +161,18 @@ public class Command{
         else if(len_1 == 3)
         {
             //Multiple transactions
-            System.out.println("Multiple tranaction");
+            // System.out.println("Multiple tranaction");
             multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards);
         }else if((len_1 == 2) && (len_2 != 0))
         {
             //multiple transaction with Apha stack
-            System.out.println("multiple transaction with Apha stack");
+            // System.out.println("multiple transaction with Apha stack");
 
 
         }else if((len_1 == 1) && (len_2 != 0))
         {
             //single transaction with Apha stack
-            System.out.println("single transaction with Apha stack");
+            // System.out.println("single transaction with Apha stack");
 
             // checkValidTransactionFinalDeck(indeck, pickedStackNumber, getFinalSuitStackNumber(placed), placed.toUpperCase());
             singleTransaction(indeck, pickedStackNumber, getFinalSuitStackNumber(placed),placed);
@@ -185,7 +185,7 @@ public class Command{
             }
         }else if(len_1 == 0 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
         {
-            System.out.println("Draw");
+            // System.out.println("Draw");
             flipDrawCard(indeck);
         }else
         {
@@ -217,7 +217,7 @@ public class Command{
                 flipDrawCard(indeck);
             else
             {
-                System.out.println("CMD -> INV");
+                // System.out.println("CMD -> INV");
             }
         }
         else if(noOfCards == 0)
@@ -274,7 +274,7 @@ public class Command{
             if(pickedStackNumber == 2)
                 // draw_picked_state = true;
                 setDrawPickedState(true);
-            System.out.println("S");
+            // System.out.println("S");
         }
         return returnStatus;
     }
@@ -293,7 +293,7 @@ public class Command{
             if(pickedStackNumber == 2)
                 // draw_picked_state = true;
                 setDrawPickedState(true);
-            System.out.println("S");
+            // System.out.println("S");
         }
         return returnStatus;
     }
@@ -340,7 +340,7 @@ public class Command{
         //Check if the first cards from picked and card on which the card has to be placed are all face up
         if(first_card_state != Cards.UP && placed_card_state != Cards.UP)
         {
-            System.out.println("FC -> FAIL");
+            // System.out.println("FC -> FAIL");
 
             for(Cards i : transportList)
             {
@@ -349,12 +349,12 @@ public class Command{
             return false;       
         }
 
-        System.out.println("FC -> OK");
+        // System.out.println("FC -> OK");
 
         //check if they are faced up or not
         if(!checkValidTransaction(first_Cards_color,place_Cards_color,first_cards_number,placed_cards_number))
         {
-            System.out.println("SC -> FAIL");
+            // System.out.println("SC -> FAIL");
 
             for(Cards i : transportList)
             {
@@ -382,13 +382,13 @@ public class Command{
             //Check the face status
             if(!(n_card_status == true && n_1_card_status == true))
             {
-                System.out.println("MSFC -> FAIL");
+                // System.out.println("MSFC -> FAIL");
                 return false;        
             }
             //card number is zero
             if(!checkValidTransaction(pickedCardColor, placeCardColor, placedCardNumber, pickedCardNumber))
             {
-                System.out.println("MTC -> FAIL");
+                // System.out.println("MTC -> FAIL");
                 for(Cards i : transportList)
                 {
                     indeck.puchStack(pickedStackNumber, i);
@@ -400,7 +400,7 @@ public class Command{
         
         while((--noOfCards) >= 0)
         {
-            System.out.println("MT -> OK");
+            // System.out.println("MT -> OK");
             //transfer the picked card into the placed stack
             indeck.puchStack(placeStackNumber, transportList.get(noOfCards));
         }
