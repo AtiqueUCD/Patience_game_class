@@ -15,6 +15,11 @@ public class PlayArea extends Deck{
     public static Stack<Cards> stack_play_draw_A = new Stack<Cards>();
     public static Stack<Cards> stack_play_draw_B = new Stack<Cards>();
 
+    public static Stack<Cards> stack_play_diamond = new Stack<Cards>();
+    public static Stack<Cards> stack_play_spades = new Stack<Cards>();
+    public static Stack<Cards> stack_play_heart = new Stack<Cards>();
+    public static Stack<Cards> stack_play_clubs = new Stack<Cards>();
+
     public Cards tempString;
 
     public void setupPlayArea()
@@ -56,6 +61,13 @@ public class PlayArea extends Deck{
             }
         }
 
+        playDeckStacks.add(0, stack_play_heart);
+        playDeckStacks.add(0, stack_play_spades);
+        playDeckStacks.add(0, stack_play_diamond);
+        playDeckStacks.add(0, stack_play_clubs);
+        
+        
+        
         playDeckStacks.add(0, stack_play_1);
         playDeckStacks.add(0, stack_play_2);
         playDeckStacks.add(0, stack_play_3);
@@ -83,6 +95,32 @@ public class PlayArea extends Deck{
     public String getCardColor(int stackNumber)
     {
         return playDeckStacks.get(stackNumber).peek().getColor();
+    }
+
+    public String getCardSuit(int stackNumber)
+    {
+        String suit = playDeckStacks.get(stackNumber).peek().getSuit();
+        String returnSuit = "";
+        switch(suit)
+        {
+            case HEART:
+                returnSuit = "H";
+            break;
+
+            case SPADES:
+                returnSuit = "S";
+            break;
+
+            case CLUBS:
+                returnSuit = "C";
+            break;
+
+            case DIAMOND:
+                returnSuit = "D";
+            break;
+                
+        }
+        return returnSuit;
     }
 
     public String getCardNumber(int stackNumber)

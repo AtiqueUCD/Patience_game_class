@@ -1,9 +1,8 @@
-
-
 public class Controller {
 
-    public static final int EXIT = 9;
-    public static int commandString;
+    public static final String EXIT_U = "E";
+    public static final String EXIT_L = "e";
+    public static String commandString;
     public static void main(String[] args)
     {
         // Deck player = new Deck();
@@ -19,12 +18,20 @@ public class Controller {
         player.initPlayDeck();
         Presenter.displayPlayArea();
 
+        System.out.print("Enter D for Draw or E for Exit -> ");
         commandString = Command.getCommand();
-        while(commandString != EXIT)
+        String Alphabet = Command.separateAlphabets(commandString);
+        String Number = Command.separateNumbers(commandString);
+
+        while( (!Alphabet.equals(EXIT_U)) && (!Alphabet.equals(EXIT_L)) )
         {
-            Command.processCommand(player, commandString);
+            Command.processCommand(player, Number, Alphabet);
             Presenter.displayPlayArea();
+            System.out.print("Enter D for Draw or E for Exit -> ");
             commandString = Command.getCommand();
+            Alphabet = Command.separateAlphabets(commandString);
+            Number = Command.separateNumbers(commandString);
         }
+        System.out.println("EXIT.");
     }
 }

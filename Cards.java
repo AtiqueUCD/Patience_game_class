@@ -58,6 +58,11 @@ public class Cards {
         return (color + suit + number) + RESET_COLOUR;
     }
 
+    public String getSuit()
+    {
+        return suit;
+    }
+
     public String getColor()
     {
         return color;

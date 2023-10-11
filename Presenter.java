@@ -6,9 +6,20 @@ public class Presenter {
     {
 
         System.out.flush();
-        for(int i = 0 ; i < 10 ; i++)
+        for(int i = 2 ; i < 14 ; i++)
         {
-            System.out.print(i + " -> ");
+
+            
+            if(i >= 10)
+            {
+                System.out.print(Deck.__suits[i-10] + " -> ");
+            }
+            else if(i == 2)
+            {
+                System.out.print("D -> ");
+            }else{
+                System.out.print((i - 1)  + " -> ");
+            }
             for(Cards j : PlayArea.playDeckStacks.get(i))
             {
                 if(j.getFaceState())

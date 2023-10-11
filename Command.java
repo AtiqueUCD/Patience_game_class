@@ -1,27 +1,198 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Command{
 
     public static final int INIT_DRAW_ID = 1;
     public static final int DRAW_ID_0 = 0;
     public static final int DRAW_ID_1 = 1;
+    public static final int CMD_OFFSET = 1;
 
-    public static int commandString;
+    public static String commandString;
 
     public static int drawID = INIT_DRAW_ID;
     public static int place_ID = DRAW_ID_0;
-    public static boolean draw_picked_state = false;
+    private static boolean draw_picked_state = false;
 
-    public static int getCommand()
+    public static final String DRAW_CARD_U = "D";
+    public static final String DRAW_CARD_L = "d";
+
+    private static void setDrawPickedState(boolean state)
+    {
+        draw_picked_state = state;
+    }
+
+    private static boolean getDrawPickedState()
+    {
+        return draw_picked_state;
+    }
+
+    public static String getCommand()
     {
         Scanner in = new Scanner(System.in);
-        commandString = in.nextInt();
+        commandString = in.nextLine();
         
         return commandString;
         
     }
 
+    public static String separateAlphabets(String input) {
+        Pattern pattern = Pattern.compile("[a-zA-Z]");
+        Matcher matcher = pattern.matcher(input);
+
+        StringBuilder alphabets = new StringBuilder();
+        while (matcher.find()) {
+            alphabets.append(matcher.group());
+        }
+
+        return alphabets.toString();
+    }
+    public static String separateNumbers(String input) {
+        Pattern pattern = Pattern.compile("\\d");
+        Matcher matcher = pattern.matcher(input);
+
+        StringBuilder numbers = new StringBuilder();
+        while (matcher.find()) {
+            numbers.append(matcher.group());
+        }
+
+        return numbers.toString();
+    }
+
+    public static int getFinalSuitStackNumber(String str)
+    {
+        int stackNumber = 0;
+        switch(str)
+        {
+            case "H":
+            case "h":
+                //stack number 9
+                stackNumber = 10;
+            break;
+
+            case "S":
+            case "s":
+                //stack number 10
+                stackNumber = 11;
+            break;
+
+            case "D":
+            case "d":
+                //stack number 11
+                stackNumber = 12;
+            break;
+
+            case "C":
+            case "c":
+                //stack number 12
+                stackNumber = 13;
+            break;
+        }
+        return stackNumber;
+    }
+    /*
+     * Alphabets will always be on the placed end
+     * numbered will always be on picked, placed and no of cards
+     * 
+     * picked:-
+     *          max length - 3 - { picked + placed + no of cards}
+     *          min length - 2 - {picked + placed}; (no of cards, picked) + Alphabet no. stacked
+     * placed:-
+     *          min length - 1
+     *          max length - 1
+     */
+    public static void processCommand(PlayArea indeck, String picked, String placed)
+    {
+
+        int len_1 = 0;
+        int len_2 = 0;
+        
+        len_1 = picked.length();
+        len_2 = placed.length();
+
+        int[] cmd = new int[]{0,0,0}; /* 0-> placed, 1-> picked 2-> no of cards*/
+
+        int command = 0, pickedStackNumber = 0, placeStackNumber = 0, noOfCards = 0;
+        if(len_1 > 1 && len_1 < 4)
+        {
+            command = Integer.parseInt(picked);
+
+            int i = 0;
+            while (command != 0) {
+                cmd[i++] = command % 10; // Get the last digit
+                command = command / 10; 
+            }
+
+            pickedStackNumber = cmd[1] + CMD_OFFSET;
+            placeStackNumber = cmd[0] + CMD_OFFSET;
+            noOfCards = cmd[2];
+
+            if(placeStackNumber == 1 + CMD_OFFSET)
+            {
+                //invalid command
+                len_1 = 0;
+                len_2 = 0;
+            }
+        }else if(len_1 == 1)
+        {
+            command = Integer.parseInt(picked);
+            cmd[0] = command % 10;
+            pickedStackNumber = cmd[0] + CMD_OFFSET;
+        }
+
+
+        if((len_1 == 2) && (len_2 == 0))
+        {
+            //single transaction
+            System.out.println("Single tranaction");
+
+            singleTransaction(indeck, pickedStackNumber, placeStackNumber);
+            // if(draw_picked_state)
+            if(getDrawPickedState())
+            {
+                // draw_picked_state = false;
+                setDrawPickedState(false);
+                indeck.popStack(place_ID);
+            }
+
+        }
+        else if(len_1 == 3)
+        {
+            //Multiple transactions
+            System.out.println("Multiple tranaction");
+            multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards);
+        }else if((len_1 == 2) && (len_2 != 0))
+        {
+            //multiple transaction with Apha stack
+            System.out.println("multiple transaction with Apha stack");
+
+
+        }else if((len_1 == 1) && (len_2 != 0))
+        {
+            //single transaction with Apha stack
+            System.out.println("single transaction with Apha stack");
+
+            // checkValidTransactionFinalDeck(indeck, pickedStackNumber, getFinalSuitStackNumber(placed), placed.toUpperCase());
+            singleTransaction(indeck, pickedStackNumber, getFinalSuitStackNumber(placed),placed);
+            // if(draw_picked_state)
+            if(getDrawPickedState())
+            {
+                // draw_picked_state = false;
+                setDrawPickedState(false);
+                indeck.popStack(place_ID);
+            }
+        }else if(len_1 == 0 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
+        {
+            System.out.println("Draw");
+            flipDrawCard(indeck);
+        }else
+        {
+            System.out.println("Invalid Command!!!");
+        }
+
+    }
     public static boolean processCommand(PlayArea indeck, int commaString)
     {
         
@@ -30,23 +201,19 @@ public class Command{
         int[] cmd = new int[]{0,0,0}; /* 0-> placed, 1-> picked 2-> no of cards*/
         int i = 0;
 
-        // int pickedStackNumber = command / 10;
-        // int placeStackNumber = command % 10;
-        // int noOfCards = command / 100;
-
 
         while (command != 0) {
             cmd[i++] = command % 10; // Get the last digit
             command = command / 10; 
         }
 
-        int pickedStackNumber = cmd[1];//command / 10;
-        int placeStackNumber = cmd[0];//command % 10;
-        int noOfCards = cmd[2];//command / 100;
+        int pickedStackNumber = cmd[1] + CMD_OFFSET;
+        int placeStackNumber = cmd[0] + CMD_OFFSET;
+        int noOfCards = cmd[2];
         
-        if(pickedStackNumber == 0)// && placeStackNumber == 8)
+        if(pickedStackNumber == CMD_OFFSET)
         {
-            if(placeStackNumber == 8)
+            if(placeStackNumber == 9)
                 flipDrawCard(indeck);
             else
             {
@@ -105,7 +272,27 @@ public class Command{
             indeck.puchStack(placeStackNumber, tempCardsObj);
             returnStatus = true;
             if(pickedStackNumber == 2)
-                draw_picked_state = true;
+                // draw_picked_state = true;
+                setDrawPickedState(true);
+            System.out.println("S");
+        }
+        return returnStatus;
+    }
+
+    public static boolean singleTransaction(PlayArea indeck, int pickedStackNumber, int placeStackNumber, String placed)
+    {
+        Cards tempCardsObj = new Cards();
+        boolean returnStatus = false;
+
+        boolean state = checkValidTransactionFinalDeck(indeck, pickedStackNumber, getFinalSuitStackNumber(placed), placed.toUpperCase());;
+        if(state == true)
+        {
+            tempCardsObj = indeck.popStack(pickedStackNumber);
+            indeck.puchStack(placeStackNumber, tempCardsObj);
+            returnStatus = true;
+            if(pickedStackNumber == 2)
+                // draw_picked_state = true;
+                setDrawPickedState(true);
             System.out.println("S");
         }
         return returnStatus;
@@ -246,6 +433,40 @@ public class Command{
         if((pickedCardColor != placeCardColor))
             if(placeCardNumber - pickedCardNumber == 1)
                 returnStatus = true;
+
+        return returnStatus;
+    }
+
+    public static boolean checkValidTransactionFinalDeck(PlayArea indeck, int pickedStackNumber, int placeStackNumber, String finalSuit)
+    {
+        boolean returnStatus = false;
+        String placeCardColor = " ";
+        int placeCardNumber = 0;
+        
+        String pickedCardColor = indeck.getCardColor(pickedStackNumber);
+        int pickedCardNumber = indeck._getCardsNumber(pickedStackNumber);
+
+        String pickedCardSuit = "";
+        String placedCardSuit = "";
+
+        pickedCardSuit = indeck.getCardSuit(pickedStackNumber);
+        if(!indeck.getStackIsEmpty(placeStackNumber))
+        {
+            placeCardColor = indeck.getCardColor(placeStackNumber);
+            placeCardNumber = indeck._getCardsNumber(placeStackNumber);
+            
+            placedCardSuit = indeck.getCardSuit(placeStackNumber);
+        }else{
+            placeCardNumber = 0;//pickedCardNumber - 1;
+            placeCardColor = (pickedCardColor == "\u001B[31m") ? ("\u001B[31m") : ("\u001B[33m");//Cards should be the same color
+            placedCardSuit = pickedCardSuit;
+
+        }
+        
+        if(finalSuit.equals(pickedCardSuit) && pickedCardSuit.equals(placedCardSuit))
+            if((pickedCardColor == placeCardColor))
+                if(pickedCardNumber - placeCardNumber == 1)
+                    returnStatus = true;
 
         return returnStatus;
     }
