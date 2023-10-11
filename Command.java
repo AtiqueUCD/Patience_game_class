@@ -103,7 +103,7 @@ public class Command{
      *          min length - 1
      *          max length - 1
      */
-    public static void processCommand(PlayArea indeck, String picked, String placed)
+    public static void processCommand(PlayArea indeck, String picked, String placed, Score score)
     {
 
         int len_1 = 0;
@@ -149,20 +149,23 @@ public class Command{
             // System.out.println("Single tranaction");
 
             singleTransaction(indeck, pickedStackNumber, placeStackNumber);
+            
             // if(draw_picked_state)
             if(getDrawPickedState())
             {
                 // draw_picked_state = false;
                 setDrawPickedState(false);
                 indeck.popStack(place_ID);
+                
             }
-
+            score.incLanetoLaneScore();
         }
         else if(len_1 == 3)
         {
             //Multiple transactions
             // System.out.println("Multiple tranaction");
             multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards);
+            score.incLanetoLaneScore();
         }else if((len_1 == 2) && (len_2 != 0))
         {
             //multiple transaction with Apha stack
@@ -182,6 +185,9 @@ public class Command{
                 // draw_picked_state = false;
                 setDrawPickedState(false);
                 indeck.popStack(place_ID);
+                score.incDrawScore();
+            }else{
+                score.incLametoDeckScore();
             }
         }else if(len_1 == 0 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
         {

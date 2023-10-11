@@ -2,7 +2,7 @@
 public class Presenter {
 
 
-    public static void displayPlayArea()
+    public static void displayPlayArea(Score viewScore)
     {
 
         System.out.flush();
@@ -29,6 +29,8 @@ public class Presenter {
             }
             System.out.println("");
         }
+
+        System.out.println("Score: " + viewScore.getScore());
     }
 
     public static void displayDeck()
