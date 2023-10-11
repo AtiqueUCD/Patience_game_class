@@ -115,7 +115,7 @@ public class Command{
         int[] cmd = new int[]{0,0,0}; /* 0-> placed, 1-> picked 2-> no of cards*/
 
         int command = 0, pickedStackNumber = 0, placeStackNumber = 0, noOfCards = 0;
-        if(len_1 > 1)
+        if(len_1 > 1 && len_1 < 4)
         {
             command = Integer.parseInt(picked);
 
@@ -128,6 +128,13 @@ public class Command{
             pickedStackNumber = cmd[1] + CMD_OFFSET;
             placeStackNumber = cmd[0] + CMD_OFFSET;
             noOfCards = cmd[2];
+
+            if(placeStackNumber == 1 + CMD_OFFSET)
+            {
+                //invalid command
+                len_1 = 0;
+                len_2 = 0;
+            }
         }else if(len_1 == 1)
         {
             command = Integer.parseInt(picked);
