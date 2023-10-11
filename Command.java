@@ -150,10 +150,8 @@ public class Command{
 
             singleTransaction(indeck, pickedStackNumber, placeStackNumber);
             
-            // if(draw_picked_state)
             if(getDrawPickedState())
             {
-                // draw_picked_state = false;
                 setDrawPickedState(false);
                 indeck.popStack(place_ID);
                 
@@ -177,12 +175,10 @@ public class Command{
             //single transaction with Apha stack
             // System.out.println("single transaction with Apha stack");
 
-            // checkValidTransactionFinalDeck(indeck, pickedStackNumber, getFinalSuitStackNumber(placed), placed.toUpperCase());
             singleTransaction(indeck, pickedStackNumber, getFinalSuitStackNumber(placed),placed);
-            // if(draw_picked_state)
+
             if(getDrawPickedState())
             {
-                // draw_picked_state = false;
                 setDrawPickedState(false);
                 indeck.popStack(place_ID);
                 score.incDrawScore();
@@ -278,7 +274,6 @@ public class Command{
             indeck.puchStack(placeStackNumber, tempCardsObj);
             returnStatus = true;
             if(pickedStackNumber == 2)
-                // draw_picked_state = true;
                 setDrawPickedState(true);
             // System.out.println("S");
         }
@@ -297,7 +292,6 @@ public class Command{
             indeck.puchStack(placeStackNumber, tempCardsObj);
             returnStatus = true;
             if(pickedStackNumber == 2)
-                // draw_picked_state = true;
                 setDrawPickedState(true);
             // System.out.println("S");
         }

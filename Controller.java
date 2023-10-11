@@ -5,8 +5,6 @@ public class Controller {
     public static String commandString;
     public static void main(String[] args)
     {
-        // Deck player = new Deck();
-
         PlayArea player = new PlayArea();
         Score playerScore = new Score();
 
@@ -14,7 +12,6 @@ public class Controller {
         player.initiateDeck();
         player.shuffleDeck();
         player.setupPlayArea();
-        // Presenter.displayDeck();
         
 
         player.initPlayDeck();

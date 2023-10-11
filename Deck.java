@@ -17,8 +17,6 @@ public class Deck{
     public static ArrayList<Cards> speadSuits = new ArrayList<Cards>();
     public static ArrayList<Cards> clubSuits = new ArrayList<Cards>();
 
-    // public static ArrayList<Stack<String>> playDeck = new ArrayList<Stack<String>>();
-
     public static ArrayList<Cards> initDeck = new ArrayList<Cards>();
 
 
@@ -65,15 +63,15 @@ public class Deck{
                     break;
 
                     case DIAMOND:
-                        diamondsSuits.add(i-1, new Cards(tempStringNumString,DIAMOND , "\u001B[31m"));//[i] = new Cards(tempStringNumString,"D" , "\u001B[31m");
+                        diamondsSuits.add(i-1, new Cards(tempStringNumString,DIAMOND , "\u001B[31m"));
                     break;
 
                     case SPADES:
-                        speadSuits.add(i-1, new Cards(tempStringNumString,SPADES , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "S", "\u001B[33m");
+                        speadSuits.add(i-1, new Cards(tempStringNumString,SPADES , "\u001B[33m"));
                     break;
 
                     case CLUBS:
-                        clubSuits.add(i-1, new Cards(tempStringNumString,CLUBS , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "C", "\u001B[33m");
+                        clubSuits.add(i-1, new Cards(tempStringNumString,CLUBS , "\u001B[33m"));
                     break;
                 }
             }
