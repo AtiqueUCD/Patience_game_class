@@ -8,6 +8,8 @@ public class Controller {
         // Deck player = new Deck();
 
         PlayArea player = new PlayArea();
+        Score playerScore = new Score();
+
         player.initiateSuit();
         player.initiateDeck();
         player.shuffleDeck();
@@ -16,7 +18,7 @@ public class Controller {
         
 
         player.initPlayDeck();
-        Presenter.displayPlayArea();
+        Presenter.displayPlayArea(playerScore);
 
         System.out.print("Enter D for Draw or E for Exit -> ");
         commandString = Command.getCommand();
@@ -25,8 +27,8 @@ public class Controller {
 
         while( (!Alphabet.equals(EXIT_U)) && (!Alphabet.equals(EXIT_L)) )
         {
-            Command.processCommand(player, Number, Alphabet);
-            Presenter.displayPlayArea();
+            Command.processCommand(player, Number, Alphabet, playerScore);
+            Presenter.displayPlayArea(playerScore);
             System.out.print("Enter D for Draw or E for Exit -> ");
             commandString = Command.getCommand();
             Alphabet = Command.separateAlphabets(commandString);
