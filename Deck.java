@@ -13,7 +13,9 @@ public class Deck{
     final static String COLOR_RED = "\u001B[31m";
     final static String COLOR_YELLOW = "\u001B[33m";
 
-    public static String[] __suits = new String[]{HEART,SPADES,DIAMOND,CLUBS};
+    final static int TOTAL_CARDS_IN_DECK = 13;
+
+    public static String[] __suits = new String[]{ HEART, SPADES, DIAMOND, CLUBS};
 
     public static ArrayList<Cards> heartSuits = new ArrayList<Cards>();
     public static ArrayList<Cards> diamondsSuits = new ArrayList<Cards>();
@@ -30,7 +32,7 @@ public class Deck{
         for(String suit_type : __suits)
         {
 
-            for(int i = 1; i <= 13; i++)
+            for(int i = 1; i <= TOTAL_CARDS_IN_DECK; i++)
             {
 
                 if(i == 1)
