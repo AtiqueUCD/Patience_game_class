@@ -10,14 +10,17 @@ public class Deck{
     final static String SPADES = "\u2660";
     final static String CLUBS = "\u2663";
 
-    public static String[] __suits = new String[]{HEART,SPADES,DIAMOND,CLUBS};
+    final static String COLOR_RED = "\u001B[31m";
+    final static String COLOR_YELLOW = "\u001B[33m";
+
+    final static int TOTAL_CARDS_IN_DECK = 13;
+
+    public static String[] __suits = new String[]{ HEART, SPADES, DIAMOND, CLUBS};
 
     public static ArrayList<Cards> heartSuits = new ArrayList<Cards>();
     public static ArrayList<Cards> diamondsSuits = new ArrayList<Cards>();
     public static ArrayList<Cards> speadSuits = new ArrayList<Cards>();
     public static ArrayList<Cards> clubSuits = new ArrayList<Cards>();
-
-    // public static ArrayList<Stack<String>> playDeck = new ArrayList<Stack<String>>();
 
     public static ArrayList<Cards> initDeck = new ArrayList<Cards>();
 
@@ -29,7 +32,7 @@ public class Deck{
         for(String suit_type : __suits)
         {
 
-            for(int i = 1; i <= 13; i++)
+            for(int i = 1; i <= TOTAL_CARDS_IN_DECK; i++)
             {
 
                 if(i == 1)
@@ -61,19 +64,19 @@ public class Deck{
                 switch(suit_type)
                 {
                     case HEART:
-                        heartSuits.add(i-1, new Cards(tempStringNumString,HEART , "\u001B[31m"));
+                        heartSuits.add(i-1, new Cards(tempStringNumString,HEART , COLOR_RED));
                     break;
 
                     case DIAMOND:
-                        diamondsSuits.add(i-1, new Cards(tempStringNumString,DIAMOND , "\u001B[31m"));//[i] = new Cards(tempStringNumString,"D" , "\u001B[31m");
+                        diamondsSuits.add(i-1, new Cards(tempStringNumString,DIAMOND , COLOR_RED));
                     break;
 
                     case SPADES:
-                        speadSuits.add(i-1, new Cards(tempStringNumString,SPADES , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "S", "\u001B[33m");
+                        speadSuits.add(i-1, new Cards(tempStringNumString,SPADES , COLOR_YELLOW));
                     break;
 
                     case CLUBS:
-                        clubSuits.add(i-1, new Cards(tempStringNumString,CLUBS , "\u001B[33m"));//[i] = new Cards(tempStringNumString, "C", "\u001B[33m");
+                        clubSuits.add(i-1, new Cards(tempStringNumString,CLUBS , COLOR_YELLOW));
                     break;
                 }
             }
