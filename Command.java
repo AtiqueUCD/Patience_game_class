@@ -16,8 +16,8 @@ public class Command{
     public static int place_ID = DRAW_ID_0;
     private static boolean draw_picked_state = false;
 
-    public static final String DRAW_CARD_U = "D";
-    public static final String DRAW_CARD_L = "d";
+    public static final String DRAW_CARD_U = "P";
+    public static final String DRAW_CARD_L = "p";
 
     private static void setDrawPickedState(boolean state)
     {
@@ -148,7 +148,10 @@ public class Command{
             //single transaction
             // System.out.println("Single tranaction");
 
-            singleTransaction(indeck, pickedStackNumber, placeStackNumber);
+            if(singleTransaction(indeck, pickedStackNumber, placeStackNumber))
+            {
+                score.incLanetoLaneScore();
+            }
             
             if(getDrawPickedState())
             {
@@ -156,14 +159,14 @@ public class Command{
                 indeck.popStack(place_ID);
                 
             }
-            score.incLanetoLaneScore();
+            // score.incLanetoLaneScore();//bug here
         }
         else if(len_1 == 3)
         {
             //Multiple transactions
             // System.out.println("Multiple tranaction");
-            multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards);
-            score.incLanetoLaneScore();
+            if(multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards))
+                score.incLanetoLaneScore();
         }else if((len_1 == 2) && (len_2 != 0))
         {
             //multiple transaction with Apha stack
