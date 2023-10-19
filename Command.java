@@ -140,22 +140,21 @@ public class Command{
 
             command = Integer.parseInt(picked);
 
+            // seperate all the digits in the number.
             int i = 0;
             while (command != 0) {
                 cmd[i++] = command % 10; // Get the last digit
                 command = command / 10; 
             }
 
+            /*
+             * Note:- CMD_OFFSET (command offset), displayed index number 
+             * is different then the actual index used.
+             */
             pickedStackNumber = cmd[1] + CMD_OFFSET;
             placeStackNumber = cmd[0] + CMD_OFFSET;
             noOfCards = cmd[2];
 
-            // if(placeStackNumber == 1 + CMD_OFFSET)
-            // {
-            //     //invalid command
-            //     len_1 = 0;
-            //     len_2 = 0;
-            // }
         }else if(len_1 == 1)
         {
             command = Integer.parseInt(picked);
@@ -169,11 +168,13 @@ public class Command{
             //single transaction
             if(singleTransaction(indeck, pickedStackNumber, placeStackNumber))
             {
+                //If the transaction is successfull then increment the score by 5.
                 score.incLanetoLaneScore();
             }
             
             if(getDrawPickedState())
             {
+                // If the card is picked from the pile deck, then pop the card from that deck.
                 setDrawPickedState(false);
                 indeck.popStack(place_ID);
                 
@@ -181,9 +182,14 @@ public class Command{
         }
         else if(len_1 == 3)
         {
-            //Multiple transactions
+            /*
+            * Multiple transactions - For picking and dropping multiple cards.
+            */
             if(multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards))
+            {
                 score.incLanetoLaneScore();
+            }
+                
         }else if((len_1 == 1) && (len_2 == 1) && !(placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
         {
             //single transaction with Apha stack
@@ -192,6 +198,7 @@ public class Command{
 
             if(getDrawPickedState())
             {
+                // If the card is picked from the pile deck, then pop the card from that deck.
                 setDrawPickedState(false);
                 indeck.popStack(place_ID);
                 score.incDrawScore();
@@ -216,8 +223,7 @@ public class Command{
             pickedStackNumber = getFinalSuitStackNumber(pickedString);
             placeStackNumber = getFinalSuitStackNumber(placedString);
             if(pickedStackNumber != placeStackNumber)
-           {
-                // if(singleTransaction(indeck, pickedStackNumber, placeStackNumber))
+            {
                 if(singleTransaction(indeck, pickedStackNumber, placeStackNumber,placedString))
                 {
                     score.incDrawScore();
@@ -348,9 +354,6 @@ public class Command{
 
         int transactionNumber = 0;
 
-        String pickedCardColor = "", placeCardColor = "";
-        int pickedCardNumber = 0, placedCardNumber = 0;
-
         /* Used for checking single card */
         String first_Cards = "", first_Cards_color = "";
         String placed_Cards = "",place_Cards_color = "";
@@ -406,41 +409,7 @@ public class Command{
             }
             return false;
         }
-        System.out.println("SC -> OK");
-
-
-        transactionNumber = noOfCards - 1;
-
-        boolean n_card_status = false, n_1_card_status = false;
-
-        while((transactionNumber) > 0)
-        {
-            pickedCardColor = transportList.get(transactionNumber).getColor();
-            pickedCardNumber = transportList.get(transactionNumber).getNumber(0);
-            n_card_status = transportList.get(transactionNumber).getFaceState();
-
-            placeCardColor = transportList.get(--transactionNumber).getColor();
-            placedCardNumber = transportList.get(transactionNumber).getNumber(0);
-            n_1_card_status = transportList.get(transactionNumber).getFaceState();
-
-            //Check the face status
-            if(!(n_card_status == true && n_1_card_status == true))
-            {
-                // System.out.println("MSFC -> FAIL");
-                return false;        
-            }
-            //card number is zero
-            if(!checkValidTransaction(pickedCardColor, placeCardColor, placedCardNumber, pickedCardNumber))
-            {
-                // System.out.println("MTC -> FAIL");
-                for(Cards i : transportList)
-                {
-                    indeck.puchStack(pickedStackNumber, i);
-                }
-                return false;
-            }
-        }
-        
+        // System.out.println("SC -> OK");
         
         while((--noOfCards) >= 0)
         {
