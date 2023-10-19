@@ -89,6 +89,11 @@ public class Command{
                 //stack number 12
                 stackNumber = 13;
             break;
+
+            case "P":
+            case "p":
+                stackNumber = 1;
+            break;
         }
         return stackNumber;
     }
@@ -117,6 +122,10 @@ public class Command{
         int command = 0, pickedStackNumber = 0, placeStackNumber = 0, noOfCards = 0;
         if(len_1 > 1 && len_1 < 4)
         {
+            // if(picked.equals("p") || picked.equals("P"))
+            // {
+
+            // }
             command = Integer.parseInt(picked);
 
             int i = 0;
@@ -167,25 +176,19 @@ public class Command{
             // System.out.println("Multiple tranaction");
             if(multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards))
                 score.incLanetoLaneScore();
-        }else if((len_1 == 2) && (len_2 != 0))
-        {
-            //multiple transaction with Apha stack
-            // System.out.println("multiple transaction with Apha stack");
-
-
-        }else if((len_1 == 1) && (len_2 != 0))
+        }else if((len_1 == 1) && (len_2 == 1) && !(placed.equals("P") || placed.equals("p")))
         {
             //single transaction with Apha stack
             // System.out.println("single transaction with Apha stack");
-
-            singleTransaction(indeck, pickedStackNumber, getFinalSuitStackNumber(placed),placed);
+            boolean status = false;
+            status = singleTransaction(indeck, pickedStackNumber, getFinalSuitStackNumber(placed),placed);
 
             if(getDrawPickedState())
             {
                 setDrawPickedState(false);
                 indeck.popStack(place_ID);
                 score.incDrawScore();
-            }else{
+            }else if(status){
                 score.incLametoDeckScore();
             }
         }else if(len_1 == 0 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
@@ -288,7 +291,7 @@ public class Command{
         Cards tempCardsObj = new Cards();
         boolean returnStatus = false;
 
-        boolean state = checkValidTransactionFinalDeck(indeck, pickedStackNumber, getFinalSuitStackNumber(placed), placed.toUpperCase());;
+        boolean state = checkValidTransactionFinalDeck(indeck, pickedStackNumber, getFinalSuitStackNumber(placed), placed.toUpperCase());
         if(state == true)
         {
             tempCardsObj = indeck.popStack(pickedStackNumber);
@@ -446,6 +449,10 @@ public class Command{
         String placeCardColor = " ";
         int placeCardNumber = 0;
         
+        if(indeck.getStackIsEmpty(pickedStackNumber))
+        {
+            return false;
+        }
         String pickedCardColor = indeck.getCardColor(pickedStackNumber);
         int pickedCardNumber = indeck._getCardsNumber(pickedStackNumber);
 
