@@ -148,7 +148,10 @@ public class Command{
             //single transaction
             // System.out.println("Single tranaction");
 
-            singleTransaction(indeck, pickedStackNumber, placeStackNumber);
+            if(singleTransaction(indeck, pickedStackNumber, placeStackNumber))
+            {
+                score.incLanetoLaneScore();
+            }
             
             if(getDrawPickedState())
             {
@@ -156,14 +159,14 @@ public class Command{
                 indeck.popStack(place_ID);
                 
             }
-            score.incLanetoLaneScore();
+            // score.incLanetoLaneScore();//bug here
         }
         else if(len_1 == 3)
         {
             //Multiple transactions
             // System.out.println("Multiple tranaction");
-            multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards);
-            score.incLanetoLaneScore();
+            if(multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards))
+                score.incLanetoLaneScore();
         }else if((len_1 == 2) && (len_2 != 0))
         {
             //multiple transaction with Apha stack
