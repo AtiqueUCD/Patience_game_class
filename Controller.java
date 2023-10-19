@@ -17,7 +17,7 @@ public class Controller {
         player.initPlayDeck();
         Presenter.displayPlayArea(playerScore);
 
-        System.out.print("Enter D for Draw or E for Exit -> ");
+        System.out.print("Enter P for Draw or E for Exit -> ");
         commandString = Command.getCommand();
         String Alphabet = Command.separateAlphabets(commandString);
         String Number = Command.separateNumbers(commandString);
@@ -26,7 +26,7 @@ public class Controller {
         {
             Command.processCommand(player, Number, Alphabet, playerScore);
             Presenter.displayPlayArea(playerScore);
-            System.out.print("Enter D for Draw or E for Exit -> ");
+            System.out.print("Enter P for Draw or E for Exit -> ");
             commandString = Command.getCommand();
             Alphabet = Command.separateAlphabets(commandString);
             Number = Command.separateNumbers(commandString);

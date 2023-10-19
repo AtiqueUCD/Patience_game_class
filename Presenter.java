@@ -16,7 +16,7 @@ public class Presenter {
             }
             else if(i == 2)
             {
-                System.out.print("D -> ");
+                System.out.print("P -> ");
             }else{
                 System.out.print((i - 1)  + " -> ");
             }

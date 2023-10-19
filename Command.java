@@ -16,8 +16,8 @@ public class Command{
     public static int place_ID = DRAW_ID_0;
     private static boolean draw_picked_state = false;
 
-    public static final String DRAW_CARD_U = "D";
-    public static final String DRAW_CARD_L = "d";
+    public static final String DRAW_CARD_U = "P";
+    public static final String DRAW_CARD_L = "p";
 
     private static void setDrawPickedState(boolean state)
     {
