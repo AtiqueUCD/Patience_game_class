@@ -92,7 +92,7 @@ public class Command{
 
             case "P":
             case "p":
-                stackNumber = 1;
+                stackNumber = 2;
             break;
         }
         return stackNumber;
@@ -122,10 +122,7 @@ public class Command{
         int command = 0, pickedStackNumber = 0, placeStackNumber = 0, noOfCards = 0;
         if(len_1 > 1 && len_1 < 4)
         {
-            // if(picked.equals("p") || picked.equals("P"))
-            // {
 
-            // }
             command = Integer.parseInt(picked);
 
             int i = 0;
@@ -176,7 +173,7 @@ public class Command{
             // System.out.println("Multiple tranaction");
             if(multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards))
                 score.incLanetoLaneScore();
-        }else if((len_1 == 1) && (len_2 == 1) && !(placed.equals("P") || placed.equals("p")))
+        }else if((len_1 == 1) && (len_2 == 1) && !(placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
         {
             //single transaction with Apha stack
             // System.out.println("single transaction with Apha stack");
@@ -191,7 +188,39 @@ public class Command{
             }else if(status){
                 score.incLametoDeckScore();
             }
-        }else if(len_1 == 0 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
+        }else if(len_1 == 1 && len_2 == 1 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
+        {
+            singleTransaction(indeck,getFinalSuitStackNumber(placed),pickedStackNumber);
+
+            if(getDrawPickedState())
+            {
+                setDrawPickedState(false);
+                indeck.popStack(place_ID);
+                score.incLametoDeckScore();
+            }
+        }
+        else if(len_2 == 2)
+        {
+            String pickedString = placed.substring(0, 1);
+            String placedString = placed.substring(1, 2);
+            pickedStackNumber = getFinalSuitStackNumber(pickedString);
+            placeStackNumber = getFinalSuitStackNumber(placedString);
+            if(pickedStackNumber != placeStackNumber)
+           {
+                if(singleTransaction(indeck, pickedStackNumber, placeStackNumber))
+                {
+                    score.incDrawScore();
+                }
+                if(getDrawPickedState())
+                {
+                    setDrawPickedState(false);
+                    indeck.popStack(place_ID);
+                }
+            }
+
+            
+        }
+        else if(len_1 == 0 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
         {
             // System.out.println("Draw");
             flipDrawCard(indeck);
