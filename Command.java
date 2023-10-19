@@ -150,12 +150,12 @@ public class Command{
             placeStackNumber = cmd[0] + CMD_OFFSET;
             noOfCards = cmd[2];
 
-            if(placeStackNumber == 1 + CMD_OFFSET)
-            {
-                //invalid command
-                len_1 = 0;
-                len_2 = 0;
-            }
+            // if(placeStackNumber == 1 + CMD_OFFSET)
+            // {
+            //     //invalid command
+            //     len_1 = 0;
+            //     len_2 = 0;
+            // }
         }else if(len_1 == 1)
         {
             command = Integer.parseInt(picked);
@@ -217,7 +217,8 @@ public class Command{
             placeStackNumber = getFinalSuitStackNumber(placedString);
             if(pickedStackNumber != placeStackNumber)
            {
-                if(singleTransaction(indeck, pickedStackNumber, placeStackNumber))
+                // if(singleTransaction(indeck, pickedStackNumber, placeStackNumber))
+                if(singleTransaction(indeck, pickedStackNumber, placeStackNumber,placedString))
                 {
                     score.incDrawScore();
                 }
