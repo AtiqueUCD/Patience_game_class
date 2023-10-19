@@ -8,7 +8,7 @@ public class Command{
     public static final int INIT_DRAW_ID = 1;
     public static final int DRAW_ID_0 = 0;
     public static final int DRAW_ID_1 = 1;
-    public static final int CMD_OFFSET = 1;
+    public static final int CMD_OFFSET = 2;//1;
 
     public static String commandString;
 
@@ -89,6 +89,11 @@ public class Command{
                 //stack number 12
                 stackNumber = 13;
             break;
+
+            case "P":
+            case "p":
+                stackNumber = 2;
+            break;
         }
         return stackNumber;
     }
@@ -117,6 +122,7 @@ public class Command{
         int command = 0, pickedStackNumber = 0, placeStackNumber = 0, noOfCards = 0;
         if(len_1 > 1 && len_1 < 4)
         {
+
             command = Integer.parseInt(picked);
 
             int i = 0;
@@ -167,28 +173,54 @@ public class Command{
             // System.out.println("Multiple tranaction");
             if(multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards))
                 score.incLanetoLaneScore();
-        }else if((len_1 == 2) && (len_2 != 0))
-        {
-            //multiple transaction with Apha stack
-            // System.out.println("multiple transaction with Apha stack");
-
-
-        }else if((len_1 == 1) && (len_2 != 0))
+        }else if((len_1 == 1) && (len_2 == 1) && !(placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
         {
             //single transaction with Apha stack
             // System.out.println("single transaction with Apha stack");
-
-            singleTransaction(indeck, pickedStackNumber, getFinalSuitStackNumber(placed),placed);
+            boolean status = false;
+            status = singleTransaction(indeck, pickedStackNumber, getFinalSuitStackNumber(placed),placed);
 
             if(getDrawPickedState())
             {
                 setDrawPickedState(false);
                 indeck.popStack(place_ID);
                 score.incDrawScore();
-            }else{
+            }else if(status){
                 score.incLametoDeckScore();
             }
-        }else if(len_1 == 0 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
+        }else if(len_1 == 1 && len_2 == 1 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
+        {
+            singleTransaction(indeck,getFinalSuitStackNumber(placed),pickedStackNumber);
+
+            if(getDrawPickedState())
+            {
+                setDrawPickedState(false);
+                indeck.popStack(place_ID);
+                score.incLametoDeckScore();
+            }
+        }
+        else if(len_2 == 2)
+        {
+            String pickedString = placed.substring(0, 1);
+            String placedString = placed.substring(1, 2);
+            pickedStackNumber = getFinalSuitStackNumber(pickedString);
+            placeStackNumber = getFinalSuitStackNumber(placedString);
+            if(pickedStackNumber != placeStackNumber)
+           {
+                if(singleTransaction(indeck, pickedStackNumber, placeStackNumber))
+                {
+                    score.incDrawScore();
+                }
+                if(getDrawPickedState())
+                {
+                    setDrawPickedState(false);
+                    indeck.popStack(place_ID);
+                }
+            }
+
+            
+        }
+        else if(len_1 == 0 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
         {
             // System.out.println("Draw");
             flipDrawCard(indeck);
@@ -288,7 +320,7 @@ public class Command{
         Cards tempCardsObj = new Cards();
         boolean returnStatus = false;
 
-        boolean state = checkValidTransactionFinalDeck(indeck, pickedStackNumber, getFinalSuitStackNumber(placed), placed.toUpperCase());;
+        boolean state = checkValidTransactionFinalDeck(indeck, pickedStackNumber, getFinalSuitStackNumber(placed), placed.toUpperCase());
         if(state == true)
         {
             tempCardsObj = indeck.popStack(pickedStackNumber);
@@ -446,6 +478,10 @@ public class Command{
         String placeCardColor = " ";
         int placeCardNumber = 0;
         
+        if(indeck.getStackIsEmpty(pickedStackNumber))
+        {
+            return false;
+        }
         String pickedCardColor = indeck.getCardColor(pickedStackNumber);
         int pickedCardNumber = indeck._getCardsNumber(pickedStackNumber);
 
