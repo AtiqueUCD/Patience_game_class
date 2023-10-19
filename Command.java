@@ -8,7 +8,7 @@ public class Command{
     public static final int INIT_DRAW_ID = 1;
     public static final int DRAW_ID_0 = 0;
     public static final int DRAW_ID_1 = 1;
-    public static final int CMD_OFFSET = 1;
+    public static final int CMD_OFFSET = 2;//1;
 
     public static String commandString;
 

@@ -18,7 +18,8 @@ public class Presenter {
             {
                 System.out.print("P -> ");
             }else{
-                System.out.print((i - 1)  + " -> ");
+                // System.out.print((i - 1)  + " -> ");
+                System.out.print((i - 2)  + " -> ");
             }
             for(Cards j : PlayArea.playDeckStacks.get(i))
             {
