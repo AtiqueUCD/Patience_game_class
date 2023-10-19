@@ -3,6 +3,11 @@ public class Controller {
     public static final String EXIT_U = "E";
     public static final String EXIT_L = "e";
     public static String commandString;
+/**
+ * Initialises the game play, initialises the main deck, destributes the card on the play deck.
+ * Accepts command from the player.
+ * @return void
+ */
     public static void main(String[] args)
     {
         PlayArea player = new PlayArea();

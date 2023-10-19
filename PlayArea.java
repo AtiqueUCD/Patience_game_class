@@ -22,6 +22,11 @@ public class PlayArea extends Deck{
 
     public Cards tempString;
 
+/**
+ * Sets up the main play area, sorts the cards from the 
+ * shuffled deck into individual stacks.
+ * @return void
+ */
     public void setupPlayArea()
     {
         for(int i = 0; i < initDeck.size(); i++)
@@ -79,7 +84,10 @@ public class PlayArea extends Deck{
         playDeckStacks.add(0, stack_play_draw_A);
         playDeckStacks.add(0, stack_play_draw_B);
     }
-
+/**
+ * Sets the face status of the top most card in the play to face up status.
+ * @return void
+ */
     public void initPlayDeck()
     {
         for(int i = 3 ;i < 10; i++)
@@ -96,7 +104,12 @@ public class PlayArea extends Deck{
     {
         return playDeckStacks.get(stackNumber).peek().getColor();
     }
-
+/**
+ * Returns a single alphabet representing the suit of the card.
+ *
+ * @param stackNumber stack number.
+ * @return Suit of the card.
+ */
     public String getCardSuit(int stackNumber)
     {
         String suit = playDeckStacks.get(stackNumber).peek().getSuit();
@@ -191,7 +204,13 @@ public class PlayArea extends Deck{
 
         return returnNumber;
     }
-
+/**
+ * Pops the object of the card. It checks if the respective stack is not empty.
+ * If the card below the popped card is faced down, it will flip it to up state.
+ *
+ * @param stackNumber The first integer.
+ * @return Object of the card which is popped out of the stack.
+ */
     public Cards popStack(int stackNumber)
     {
         Cards tempObj = new Cards();
@@ -207,7 +226,13 @@ public class PlayArea extends Deck{
         }
         return tempObj;
     }
-
+/**
+ * Push new card into reuqested stack.
+ *
+ * @param stackNumber The first integer.
+ * @param newCard object of the card.
+ * @return void
+ */
     public void puchStack(int stackNumber, Cards newCard)
     {
         playDeckStacks.get(stackNumber).push(newCard);

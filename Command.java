@@ -37,7 +37,11 @@ public class Command{
         return commandString;
         
     }
-
+/**
+ * Seperates alpabets from the input string.
+ * @param input string.
+ * @return void
+ */
     public static String separateAlphabets(String input) {
         Pattern pattern = Pattern.compile("[a-zA-Z]");
         Matcher matcher = pattern.matcher(input);
@@ -49,6 +53,12 @@ public class Command{
 
         return alphabets.toString();
     }
+
+/**
+ * Seperates number from the input string.
+ * @param input string.
+ * @return void
+ */
     public static String separateNumbers(String input) {
         Pattern pattern = Pattern.compile("\\d");
         Matcher matcher = pattern.matcher(input);
@@ -60,7 +70,12 @@ public class Command{
 
         return numbers.toString();
     }
-
+/**
+ * Takes in the alphabet and returns its respective stack number.
+ * 
+ * @param str String of the suit deck and pile deck
+ * @return stack number.
+ */
     public static int getFinalSuitStackNumber(String str)
     {
         int stackNumber = 0;
@@ -97,17 +112,17 @@ public class Command{
         }
         return stackNumber;
     }
-    /*
-     * Alphabets will always be on the placed end
-     * numbered will always be on picked, placed and no of cards
-     * 
-     * picked:-
-     *          max length - 3 - { picked + placed + no of cards}
-     *          min length - 2 - {picked + placed}; (no of cards, picked) + Alphabet no. stacked
-     * placed:-
-     *          min length - 1
-     *          max length - 1
-     */
+/**
+ * Processes the command and catacorises them into two main transactions,
+ * 1. Single transaction
+ * 2. Multiple transaction.
+ * 
+ * @param indeck object of PlayArea
+ * @param picked picked command
+ * @param placed placed command
+ * @param score object of the Score class.
+ * @return void
+ */
     public static void processCommand(PlayArea indeck, String picked, String placed, Score score)
     {
 
@@ -152,8 +167,6 @@ public class Command{
         if((len_1 == 2) && (len_2 == 0))
         {
             //single transaction
-            // System.out.println("Single tranaction");
-
             if(singleTransaction(indeck, pickedStackNumber, placeStackNumber))
             {
                 score.incLanetoLaneScore();
@@ -165,18 +178,15 @@ public class Command{
                 indeck.popStack(place_ID);
                 
             }
-            // score.incLanetoLaneScore();//bug here
         }
         else if(len_1 == 3)
         {
             //Multiple transactions
-            // System.out.println("Multiple tranaction");
             if(multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards))
                 score.incLanetoLaneScore();
         }else if((len_1 == 1) && (len_2 == 1) && !(placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
         {
             //single transaction with Apha stack
-            // System.out.println("single transaction with Apha stack");
             boolean status = false;
             status = singleTransaction(indeck, pickedStackNumber, getFinalSuitStackNumber(placed),placed);
 
@@ -222,7 +232,6 @@ public class Command{
         }
         else if(len_1 == 0 && (placed.equals(DRAW_CARD_U) || placed.equals(DRAW_CARD_L)))
         {
-            // System.out.println("Draw");
             flipDrawCard(indeck);
         }else
         {
@@ -230,10 +239,12 @@ public class Command{
         }
 
     }
+
+    /*
+     * Deprecated
+     */
     public static boolean processCommand(PlayArea indeck, int commaString)
     {
-        
-
         int command = commaString;
         int[] cmd = new int[]{0,0,0}; /* 0-> placed, 1-> picked 2-> no of cards*/
         int i = 0;
@@ -252,10 +263,6 @@ public class Command{
         {
             if(placeStackNumber == 9)
                 flipDrawCard(indeck);
-            else
-            {
-                // System.out.println("CMD -> INV");
-            }
         }
         else if(noOfCards == 0)
         {
@@ -268,13 +275,14 @@ public class Command{
         }else{
             multipleTransaction(indeck, pickedStackNumber, placeStackNumber, noOfCards);
         }
-
-
-
-
         return true;
     }
-
+/**
+ * Draws the card from the pile card, handles the overflow of of the pile deck
+ * using the ping pong method.
+ * @param object for the PlayArea class.
+ * @return void
+ */
     public static void flipDrawCard(PlayArea indeck)
     {
         Cards tempCard = new Cards();

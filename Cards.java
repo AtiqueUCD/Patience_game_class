@@ -27,24 +27,34 @@ public class Cards {
          */
     }
 
-    /*
-     * Setters
-     */
+/**
+ * Sets the number for the card.
+ * @return void
+ */
     public void setNumber(String num)
     {
         number = num;
     }
-
+/**
+ * Sets the suit for the card.
+ * @return void
+ */
     public void setSuit(String suit)
     {
         this.suit = suit;
     }
-
+/**
+ * Sets the color of the card.
+ * @return void
+ */
     public void setColor(String color)
     {
         this.color = color;
     }
-
+/**
+ * Sets the face status of the card.
+ * @return void
+ */
     public void setState(boolean state)
     {
         faceState = state;
@@ -57,22 +67,37 @@ public class Cards {
     {
         return (color + suit + number) + RESET_COLOUR;
     }
-
+/**
+ * Getter fucntion for suit of the card.
+ * @return Returns the suit of the card.
+ */
     public String getSuit()
     {
         return suit;
     }
-
+/**
+ * Getter fucntion for card color
+ * @return The string for the color of the card.
+ */
     public String getColor()
     {
         return color;
     }
-
+/**
+ * Return the number of the card.
+ * 
+ * @return card number in string format
+ */
     public String getNumber()
     {
         return number;
     }
-
+/**
+ * Return the integer form of the card number. Convertes the alphabet numbering into integer.
+ *
+ * @param temp interger form of the stack number
+ * @return The index number for the PlayArea stack
+ */
     public int getNumber(int temp)
     {
         int cardNumber = 0;
@@ -96,7 +121,11 @@ public class Cards {
         }
         return cardNumber;
     }
+/**
+ * Gets the face status of the card, whether the card is faced up or down.
 
+ * @return face up or down status.
+ */
     public boolean getFaceState()
     {
         return faceState;

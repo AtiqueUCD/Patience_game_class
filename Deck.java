@@ -24,7 +24,10 @@ public class Deck{
 
     public static ArrayList<Cards> initDeck = new ArrayList<Cards>();
 
-
+/**
+ * Initialises the all the four suits, as add them individually to its respective array list.
+ * @return void
+ */
     public void initiateSuit()
     {
         String tempStringNumString = "";
@@ -82,7 +85,10 @@ public class Deck{
             }
         }
     }
-
+/**
+ * Combine al the suits to a single deck of 52 cards.
+ * @return void
+ */
     public void initiateDeck()
     {
 
@@ -92,7 +98,10 @@ public class Deck{
         initDeck.addAll(0, clubSuits);
         
     }
-
+/**
+ * Shuffles the deck.
+ * @return void
+ */
     public void shuffleDeck()
     {
         Collections.shuffle(initDeck);
